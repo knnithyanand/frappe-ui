@@ -27,7 +27,7 @@ backend so there is no need to specify the url. Instead you only define
   <Button @click="todos.next()"> Next Page </Button>
 </template>
 <script setup>
-import { createListResource } from 'frappe-ui'
+import { createListResource } from '@yletlabs/frappe-ui'
 let todos = createListResource({
   doctype: 'ToDo',
   fields: ['name', 'description', 'status'],
@@ -47,7 +47,7 @@ the `resourcesPlugin` first.
 **main.js**
 
 ```js
-import { resourcesPlugin } from 'frappe-ui'
+import { resourcesPlugin } from '@yletlabs/frappe-ui'
 app.use(resourcesPlugin)
 ```
 

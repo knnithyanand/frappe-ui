@@ -1,7 +1,10 @@
 import fs from 'node:fs'
 import path from 'node:path'
 
-const components_path = path.resolve(__dirname, '../../src/components/')
+const components_path = path.resolve(
+  __dirname,
+  '../../packages/core/src/components/',
+)
 
 export const getComponentItems = () => {
   const entries = fs.readdirSync(components_path, { withFileTypes: true })

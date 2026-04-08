@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { Button } from "frappe-ui";
+import { Button } from '@yletlabs/frappe-ui';
 import LucideBox from "~icons/lucide/box";
 
 interface Props {

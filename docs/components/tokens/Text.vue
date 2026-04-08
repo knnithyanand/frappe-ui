@@ -1,6 +1,6 @@
 <script setup>
 import { computed, ref } from "vue";
-import { Tabs } from "frappe-ui";
+import { Tabs } from '@yletlabs/frappe-ui';
 
 defineProps({
   data: {

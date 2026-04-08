@@ -11,7 +11,7 @@ server-side data fetching, directives and utilities.
 
 ```vue
 <script setup>
-import { Button, LoadingText, createResource } from 'frappe-ui'
+import { Button, LoadingText, createResource } from '@yletlabs/frappe-ui'
 
 let todos = createResource({
   type: 'list',

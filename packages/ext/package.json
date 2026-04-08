@@ -1,0 +1,48 @@
+{
+  "name": "@yletlabs/frappe-ui-ext",
+  "version": "0.0.0",
+  "description": "Frappe-specific integrations built on frappe-ui core",
+  "license": "MIT",
+  "type": "module",
+  "files": [
+    "dist"
+  ],
+  "main": "./dist/frappe-ui-ext.cjs.js",
+  "module": "./dist/frappe-ui-ext.es.js",
+  "types": "./src/index.d.ts",
+  "exports": {
+    ".": {
+      "types": "./src/index.d.ts",
+      "import": "./dist/frappe-ui-ext.es.js",
+      "require": "./dist/frappe-ui-ext.cjs.js"
+    }
+  },
+  "scripts": {
+    "dev": "vite",
+    "build": "vite build",
+    "build:types": "vue-tsc -p tsconfig.build.json --emitDeclarationOnly",
+    "typecheck": "vue-tsc -p tsconfig.json --noEmit",
+    "test": "vitest --run --passWithNoTests",
+    "preview": "vite preview"
+  },
+  "dependencies": {
+    "@yletlabs/frappe-ui": "workspace:*",
+    "socket.io-client": "^4.5.1"
+  },
+  "peerDependencies": {
+    "vue": ">=3.5.0",
+    "vue-router": "^4.1.6"
+  },
+  "devDependencies": {
+    "@types/node": "^24.12.2",
+    "@vitejs/plugin-vue": "^4.0.0",
+    "jsdom": "^27.4.0",
+    "msw": "^2.7.0",
+    "typescript": "^5.0.2",
+    "vite": "^5.1.8",
+    "vitest": "^2.1.8",
+    "vue": "^3.5.32",
+    "vue-tsc": "^3.2.6",
+    "vue-router": "^4.1.6"
+  }
+}

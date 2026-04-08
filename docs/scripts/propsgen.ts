@@ -21,7 +21,7 @@ const tsconfigChecker = createChecker(
 // test meta obj for single component
 // const componentPath = path.join(
 //   __dirname,
-//   '../../src/components/Alert/Alert.vue',
+//   '../../packages/core/src/components/Alert/Alert.vue',
 // )
 // const meta = tsconfigChecker.getComponentMeta(componentPath)
 
@@ -78,7 +78,7 @@ const genMetaTable = (name:string, data) => {
   return markupStr
 }
 
-const componentDir = path.join(__dirname, '../../src/components')
+const componentDir = path.join(__dirname, '../../packages/core/src/components')
 const components = fs.readdirSync(componentDir)
 
 // only include dirs as they have story files
@@ -86,7 +86,7 @@ const list = components.filter((x) => !x.includes('.vue'))
 
 list.forEach((x) => {
   try {
-    const fullpath = `../../src/components/${x}/${x}.vue`
+    const fullpath = `../../packages/core/src/components/${x}/${x}.vue`
     const componentPath = path.join(__dirname, fullpath)
     const meta = tsconfigChecker.getComponentMeta(componentPath)
 

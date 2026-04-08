@@ -9,7 +9,7 @@ export default function (md: MarkdownRenderer) {
     state.src = state.src.replace(previewRegex, (_, name, csr, css) => {
       let [componentName, storyName] = name.split('-')
 
-      const componentPath = `../../../../src/components/${componentName}/stories/${storyName}.vue`
+      const componentPath = `../../../../packages/core/src/components/${componentName}/stories/${storyName}.vue`
 
       const scriptIdx = state.tokens.findIndex(
         (i) => i.type === 'html_block' && /<script setup>/.test(i.content),
@@ -52,7 +52,7 @@ export default function (md: MarkdownRenderer) {
       /<PropsTable\s+name=["']([^"']+)["']\s+:data='([^']+)'\/>/g
 
     state.src = state.src.replace(propsRegex, (match, name, data) => {
-      const typesPath = `../../../../src/components/${name}/types.ts`
+      const typesPath = `../../../../packages/core/src/components/${name}/types.ts`
       const idx = state.tokens.findIndex((i) => i.content.includes(match))
 
       if (idx !== -1) {

@@ -9,7 +9,7 @@ Creates a function that will run only once in the specified number of wait time
 every time the user presses a key, it will run only once in every `500ms`.
 
 ```js
-import { debounce } from 'frappe-ui'
+import { debounce } from '@yletlabs/frappe-ui'
 
 function onInput(e) {
   // do something with input event
@@ -24,7 +24,7 @@ This function will return the base64 string of a
 [File object](https://developer.mozilla.org/en-US/docs/Web/API/File_API).
 
 ```js
-import { fileToBase64 } from 'frappe-ui'
+import { fileToBase64 } from '@yletlabs/frappe-ui'
 
 let base64 = fileToBase64(file) // file must be an instance of File
 ```
@@ -37,7 +37,7 @@ the page changes.
 Register the plugin in your `main.js` file.
 
 ```js
-import { pageMetaPlugin } from 'frappe-ui'
+import { pageMetaPlugin } from '@yletlabs/frappe-ui'
 // ...
 app.use(pageMetaPlugin)
 ```

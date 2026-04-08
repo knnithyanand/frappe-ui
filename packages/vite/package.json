@@ -1,0 +1,39 @@
+{
+  "name": "@yletlabs/frappe-ui-vite",
+  "version": "0.0.0",
+  "description": "Vite plugin utilities for frappe-ui",
+  "license": "MIT",
+  "type": "module",
+  "files": [
+    "dist"
+  ],
+  "main": "./dist/index.js",
+  "types": "./src/index.js",
+  "exports": {
+    ".": {
+      "types": "./src/index.js",
+      "import": "./dist/index.js"
+    }
+  },
+  "scripts": {
+    "build": "tsc -p tsconfig.build.json",
+    "typecheck": "tsc -p tsconfig.json --noEmit",
+    "test": "vitest --run --passWithNoTests"
+  },
+  "dependencies": {
+    "lucide-static": "^0.545.0",
+    "ora": "5.4.1",
+    "unplugin-auto-import": "^19.3.0",
+    "unplugin-icons": "^22.1.0",
+    "unplugin-vue-components": "^28.4.1"
+  },
+  "peerDependencies": {
+    "vite": "^5.1.8 || ^6 || ^7 || ^8"
+  },
+  "devDependencies": {
+    "@types/node": "^24.12.2",
+    "typescript": "^5.0.2",
+    "vite": "^5.1.8",
+    "vitest": "^2.1.8"
+  }
+}

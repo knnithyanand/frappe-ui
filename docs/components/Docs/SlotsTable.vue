@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { Badge } from 'frappe-ui'
+import { Badge } from '@yletlabs/frappe-ui'
 
 interface itemProp {
   name: string

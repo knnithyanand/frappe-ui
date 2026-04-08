@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import LucideCopy from '~icons/lucide/copy'
-import { Button } from 'frappe-ui'
+import { Button } from '@yletlabs/frappe-ui'
 
 defineProps({
   data: {

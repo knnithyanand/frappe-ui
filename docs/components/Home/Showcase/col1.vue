@@ -6,7 +6,7 @@ import {
   Select,
   Switch,
   Tooltip,
-} from "frappe-ui";
+} from '@yletlabs/frappe-ui';
 import LucideRight from "~icons/lucide/arrow-right";
 import LucideGlobe from "~icons/lucide/globe";
 import LucideLink from "~icons/lucide/link";

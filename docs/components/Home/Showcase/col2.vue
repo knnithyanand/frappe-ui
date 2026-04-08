@@ -11,7 +11,7 @@ import {
   Progress,
   Rating,
   Switch,
-} from 'frappe-ui'
+} from '@yletlabs/frappe-ui'
 import LucideTag from '~icons/lucide/tag'
 
 const val = ref(0)

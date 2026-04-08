@@ -36,7 +36,7 @@ object.
 </template>
 
 <script setup>
-import { createResource } from 'frappe-ui'
+import { createResource } from '@yletlabs/frappe-ui'
 let post = createResource({
   url: 'https://jsonplaceholder.typicode.com/posts/1',
   method: 'GET',
@@ -53,7 +53,7 @@ Resources can also be used in options API style. You need to register the
 **main.js**
 
 ```js
-import { resourcesPlugin } from 'frappe-ui'
+import { resourcesPlugin } from '@yletlabs/frappe-ui'
 app.use(resourcesPlugin)
 ```
 
@@ -100,7 +100,7 @@ cached one.
 </template>
 
 <script setup>
-import { createResource } from 'frappe-ui'
+import { createResource } from '@yletlabs/frappe-ui'
 let post = createResource({
   url: 'https://jsonplaceholder.typicode.com/posts/1',
   cache: 'posts',
@@ -236,7 +236,7 @@ service.
 </template>
 
 <script setup>
-import { createResource } from 'frappe-ui'
+import { createResource } from '@yletlabs/frappe-ui'
 let todos = createResource({
   url: '/api/method/frappe.client.get_list',
   params: {
@@ -262,7 +262,7 @@ the following:
 **main.js**
 
 ```js
-import { setConfig, frappeRequest } from 'frappe-ui'
+import { setConfig, frappeRequest } from '@yletlabs/frappe-ui'
 setConfig('resourceFetcher', frappeRequest)
 ```
 
@@ -277,7 +277,7 @@ from `message` key and error from `exc`.
 </template>
 
 <script setup>
-import { createResource } from 'frappe-ui'
+import { createResource } from '@yletlabs/frappe-ui'
 let todos = createResource({
 - url: '/api/method/frappe.client.get_list',
 + url: 'frappe.client.get_list',

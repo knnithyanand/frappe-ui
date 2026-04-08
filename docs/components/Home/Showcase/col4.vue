@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import { computed, reactive, ref } from "vue";
-import { Avatar, Button, Password, Progress, Tree } from "frappe-ui";
+import { Avatar, Button, Password, Progress, Tree } from '@yletlabs/frappe-ui';
 
 import LucideFolder from "~icons/lucide/folder";
 import LucideFile from "~icons/lucide/file";

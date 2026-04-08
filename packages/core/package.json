@@ -1,0 +1,101 @@
+{
+  "name": "@yletlabs/frappe-ui",
+  "version": "0.0.0",
+  "description": "Core Frappe UI component library",
+  "license": "MIT",
+  "type": "module",
+  "files": [
+    "dist"
+  ],
+  "main": "./dist/frappe-ui.cjs.js",
+  "module": "./dist/frappe-ui.es.js",
+  "types": "./src/index.ts",
+  "sideEffects": [
+    "**/*.css"
+  ],
+  "exports": {
+    ".": {
+      "types": "./src/index.ts",
+      "import": "./dist/frappe-ui.es.js",
+      "require": "./dist/frappe-ui.cjs.js"
+    },
+    "./style.css": "./dist/frappe-ui.css",
+    "./components/*": "./src/components/*",
+    "./resources": "./src/resources/index.ts",
+    "./resources/*": "./src/resources/*",
+    "./utils/*": "./src/utils/*"
+  },
+  "scripts": {
+    "dev": "vite",
+    "build": "vite build",
+    "build:types": "vue-tsc -p tsconfig.build.json --emitDeclarationOnly",
+    "typecheck": "vue-tsc -p tsconfig.json --noEmit",
+    "test": "vitest --run --config vitest.config.ts",
+    "preview": "vite preview"
+  },
+  "dependencies": {
+    "@floating-ui/dom": "^1.7.4",
+    "@floating-ui/vue": "^1.1.6",
+    "@headlessui/vue": "^1.7.14",
+    "@popperjs/core": "^2.11.2",
+    "@tailwindcss/forms": "^0.5.3",
+    "@tailwindcss/line-clamp": "^0.4.4",
+    "@tailwindcss/typography": "^0.5.16",
+    "@tiptap/core": "^3.11.0",
+    "@tiptap/extension-bubble-menu": "^3.11.0",
+    "@tiptap/extension-code": "^3.11.0",
+    "@tiptap/extension-code-block": "^3.11.0",
+    "@tiptap/extension-code-block-lowlight": "^3.11.0",
+    "@tiptap/extension-color": "^3.11.0",
+    "@tiptap/extension-heading": "^3.11.0",
+    "@tiptap/extension-highlight": "^3.11.0",
+    "@tiptap/extension-image": "^3.11.0",
+    "@tiptap/extension-link": "^3.11.0",
+    "@tiptap/extension-list": "^3.11.0",
+    "@tiptap/extension-mention": "^3.11.0",
+    "@tiptap/extension-node-range": "^3.11.0",
+    "@tiptap/extension-placeholder": "^3.11.0",
+    "@tiptap/extension-table": "^3.11.0",
+    "@tiptap/extension-task-item": "^3.11.0",
+    "@tiptap/extension-task-list": "^3.11.0",
+    "@tiptap/extension-text-align": "^3.11.0",
+    "@tiptap/extension-text-style": "^3.11.0",
+    "@tiptap/extension-typography": "^3.11.0",
+    "@tiptap/extensions": "^3.11.0",
+    "@tiptap/pm": "^3.11.0",
+    "@tiptap/starter-kit": "^3.11.0",
+    "@tiptap/suggestion": "^3.11.0",
+    "@tiptap/vue-3": "^3.11.0",
+    "@vueuse/core": "^10.4.1",
+    "dayjs": "^1.11.13",
+    "dompurify": "^3.2.6",
+    "echarts": "^5.6.0",
+    "feather-icons": "^4.28.0",
+    "grid-layout-plus": "^1.1.0",
+    "highlight.js": "^11.11.1",
+    "idb-keyval": "^6.2.0",
+    "lowlight": "^3.3.0",
+    "marked": "^15.0.12",
+    "prosemirror-tables": "^1.8.1",
+    "radix-vue": "^1.5.3",
+    "reka-ui": "^2.5.0",
+    "slugify": "^1.6.6",
+    "tippy.js": "^6.3.7"
+  },
+  "peerDependencies": {
+    "vue": ">=3.5.0",
+    "vue-router": "^4.1.6"
+  },
+  "devDependencies": {
+    "@types/node": "^24.12.2",
+    "@vitejs/plugin-vue": "^4.0.0",
+    "jsdom": "^27.4.0",
+    "msw": "^2.7.0",
+    "typescript": "^5.0.2",
+    "vite": "^5.1.8",
+    "vitest": "^2.1.8",
+    "vue": "^3.5.32",
+    "vue-tsc": "^3.2.6",
+    "vue-router": "^4.1.6"
+  }
+}

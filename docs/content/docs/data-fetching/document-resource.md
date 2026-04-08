@@ -27,7 +27,7 @@ the fields of the document. Along with this, you get `todo.setValue` and
   </div>
 </template>
 <script setup>
-import { createDocumentResource, Button } from 'frappe-ui'
+import { createDocumentResource, Button } from '@yletlabs/frappe-ui'
 let todo = createDocumentResource({
   doctype: 'ToDo',
   name: '1',
@@ -46,7 +46,7 @@ the `resourcesPlugin` first.
 **main.js**
 
 ```js
-import { resourcesPlugin } from 'frappe-ui'
+import { resourcesPlugin } from '@yletlabs/frappe-ui'
 app.use(resourcesPlugin)
 ```
 

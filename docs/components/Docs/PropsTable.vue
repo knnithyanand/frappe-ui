@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import { ref } from 'vue'
-import { Badge, Button } from 'frappe-ui'
+import { Badge, Button } from '@yletlabs/frappe-ui'
 import LucideCode from '~icons/lucide/code-xml'
 
 interface itemProp {

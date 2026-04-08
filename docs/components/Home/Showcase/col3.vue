@@ -9,7 +9,7 @@ import {
   Select,
   Slider,
   Switch,
-} from "frappe-ui";
+} from '@yletlabs/frappe-ui';
 import LucideCoins from "~icons/lucide/circle-dollar-sign";
 import LucideUsers from "~icons/lucide/users";
 import LucideVideo from "~icons/lucide/video";

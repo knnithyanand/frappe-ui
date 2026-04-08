@@ -1,6 +1,6 @@
 <script setup>
 import { computed, onMounted, ref, watch } from 'vue'
-import { Button, Breadcrumbs } from 'frappe-ui'
+import { Button, Breadcrumbs } from '@yletlabs/frappe-ui'
 import LucideSun from '~icons/lucide/sun'
 import LucideMoon from '~icons/lucide/moon-star'
 import LucideSearch from '~icons/lucide/search'

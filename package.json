@@ -1,159 +1,39 @@
 {
-  "name": "frappe-ui",
-  "version": "0.1.271",
-  "description": "A set of components and utilities for rapid UI development",
+  "name": "frappe-ui-workspace",
+  "version": "0.0.0",
+  "private": true,
+  "description": "Workspace root for frappe-ui packages",
   "type": "module",
-  "sideEffects": false,
+  "packageManager": "pnpm@10.33.0",
+  "engines": {
+    "node": ">=22",
+    "pnpm": ">=9"
+  },
   "scripts": {
-    "test": "vitest --run",
-    "type-check": "tsc --noEmit",
-    "prettier": "yarn prettier -w ./src",
-    "bump-and-release": "yarn test && git pull --rebase origin main && yarn run release-patch",
-    "release-patch": "yarn version --patch && git push && git push --tags",
-    "dev": "vite",
-    "build": "vite build",
-    "preview": "vite preview",
+    "build": "pnpm -r --filter './packages/*' run build",
+    "typecheck": "pnpm -r --if-present --filter './packages/*' run typecheck",
+    "test": "pnpm -r --if-present --filter './packages/*' run test",
+    "lint": "pnpm -r --if-present run lint",
     "docs:dev": "vitepress dev docs --host",
     "docs:build": "vitepress build docs",
     "docs:preview": "vitepress preview docs",
-    "docs:gen": "node docs/scripts/propsgen.ts --trace-uncaught"
-  },
-  "exports": {
-    ".": {
-      "import": "./src/index.ts",
-      "types": "./src/index.ts"
-    },
-    "./frappe": {
-      "import": "./frappe/index.js"
-    },
-    "./drive": {
-      "import": "./frappe/drive/index.js"
-    },
-    "./drive/*": {
-      "import": "./frappe/drive/*"
-    },
-    "./icons": {
-      "import": "./icons/index.ts"
-    },
-    "./tailwind": {
-      "import": "./tailwind/index.js",
-      "default": "./tailwind/index.js"
-    },
-    "./vite": {
-      "import": "./vite/index.js"
-    },
-    "./style.css": {
-      "import": "./src/style.css"
-    },
-    "./editor-style.css": {
-      "import": "./src/components/TextEditor/style.css"
-    },
-    "./tsconfig.base.json": {
-      "default": "./tsconfig.base.json",
-      "types": "./tsconfig.base.json"
-    }
-  },
-  "files": [
-    "frappe",
-    "src",
-    "scripts",
-    "vite",
-    "icons",
-    "tailwind",
-    "tsconfig.base.json"
-  ],
-  "repository": {
-    "type": "git",
-    "url": "git+https://github.com/frappe/frappe-ui.git"
-  },
-  "author": "Frappe Technologies Pvt. Ltd.",
-  "license": "MIT",
-  "dependencies": {
-    "@floating-ui/dom": "^1.7.4",
-    "@floating-ui/vue": "^1.1.6",
-    "@headlessui/vue": "^1.7.14",
-    "@popperjs/core": "^2.11.2",
-    "@tailwindcss/forms": "^0.5.3",
-    "@tailwindcss/line-clamp": "^0.4.4",
-    "@tailwindcss/typography": "^0.5.16",
-    "@tiptap/core": "^3.11.0",
-    "@tiptap/extension-bubble-menu": "^3.11.0",
-    "@tiptap/extension-code": "^3.11.0",
-    "@tiptap/extension-code-block": "^3.11.0",
-    "@tiptap/extension-code-block-lowlight": "^3.11.0",
-    "@tiptap/extension-color": "^3.11.0",
-    "@tiptap/extension-heading": "^3.11.0",
-    "@tiptap/extension-highlight": "^3.11.0",
-    "@tiptap/extension-image": "^3.11.0",
-    "@tiptap/extension-link": "^3.11.0",
-    "@tiptap/extension-list": "^3.11.0",
-    "@tiptap/extension-mention": "^3.11.0",
-    "@tiptap/extension-node-range": "^3.11.0",
-    "@tiptap/extension-placeholder": "^3.11.0",
-    "@tiptap/extension-table": "^3.11.0",
-    "@tiptap/extension-task-item": "^3.11.0",
-    "@tiptap/extension-task-list": "^3.11.0",
-    "@tiptap/extension-text-align": "^3.11.0",
-    "@tiptap/extension-text-style": "^3.11.0",
-    "@tiptap/extension-typography": "^3.11.0",
-    "@tiptap/extensions": "^3.11.0",
-    "@tiptap/pm": "^3.11.0",
-    "@tiptap/starter-kit": "^3.11.0",
-    "@tiptap/suggestion": "^3.11.0",
-    "@tiptap/vue-3": "^3.11.0",
-    "@vueuse/core": "^10.4.1",
-    "dayjs": "^1.11.13",
-    "dompurify": "^3.2.6",
-    "echarts": "^5.6.0",
-    "feather-icons": "^4.28.0",
-    "grid-layout-plus": "^1.1.0",
-    "highlight.js": "^11.11.1",
-    "idb-keyval": "^6.2.0",
-    "lowlight": "^3.3.0",
-    "lucide-static": "^0.545.0",
-    "marked": "^15.0.12",
-    "ora": "5.4.1",
-    "prettier": "^3.3.2",
-    "prosemirror-tables": "^1.8.1",
-    "radix-vue": "^1.5.3",
-    "reka-ui": "^2.5.0",
-    "slugify": "^1.6.6",
-    "socket.io-client": "^4.5.1",
-    "tippy.js": "^6.3.7",
-    "typescript": "^5.0.2",
-    "unplugin-auto-import": "^19.3.0",
-    "unplugin-icons": "^22.1.0",
-    "unplugin-vue-components": "^28.4.1"
-  },
-  "peerDependencies": {
-    "vue": ">=3.5.0",
-    "vue-router": "^4.1.6"
+    "docs:gen": "node docs/scripts/propsgen.ts --trace-uncaught",
+    "dev:playground": "pnpm --dir examples/playground run dev",
+    "storybook": "storybook dev -p 6006",
+    "build-storybook": "storybook build"
   },
   "devDependencies": {
-    "@vitejs/plugin-vue": "^4.0.0",
-    "autoprefixer": "^10.4.13",
-    "cypress": "^15.8.2",
-    "cypress-split": "^1.24.28",
-    "jsdom": "^27.4.0",
-    "lint-staged": ">=10",
-    "msw": "^2.7.0",
-    "postcss": "^8.4.21",
-    "prettier-plugin-tailwindcss": "^0.1.13",
-    "tailwindcss": "^3.2.7",
-    "vite": "^5.1.8",
     "vitepress": "^2.0.0-alpha.15",
-    "vitest": "^2.1.8",
-    "vue": "^3.3.0",
-    "vue-component-meta": "^3.1.8",
-    "vue-router": "^4.1.6"
-  },
-  "resolutions": {
-    "prosemirror-model": "1.25.2",
-    "prosemirror-state": "1.4.3",
-    "prosemirror-view": "1.40.0",
-    "prosemirror-transform": "1.10.4"
-  },
-  "lint-staged": {
-    "*.{js,css,md,vue}": "prettier --write"
+    "storybook": "^10.3.5",
+    "@storybook/vue3-vite": "^10.3.5",
+    "@chromatic-com/storybook": "^5.1.1",
+    "@storybook/addon-vitest": "^10.3.5",
+    "@storybook/addon-a11y": "^10.3.5",
+    "@storybook/addon-docs": "^10.3.5",
+    "@storybook/addon-onboarding": "^10.3.5",
+    "vitest": "^4.1.3",
+    "playwright": "^1.59.1",
+    "@vitest/browser-playwright": "^4.1.3",
+    "@vitest/coverage-v8": "^4.1.3"
   }
 }

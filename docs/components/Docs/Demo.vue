@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import { ref } from 'vue'
-import { Tabs } from 'frappe-ui'
+import { Tabs } from '@yletlabs/frappe-ui'
 import LucidePreview from '~icons/lucide/square-mouse-pointer'
 import LucideCode from '~icons/lucide/code'
 

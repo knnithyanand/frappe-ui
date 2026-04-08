@@ -15,7 +15,7 @@ clicks outside the div will trigger the `setInactive` function.
   </div>
 </template>
 <script>
-import { onOutsideClickDirective } from 'frappe-ui'
+import { onOutsideClickDirective } from '@yletlabs/frappe-ui'
 export default {
   directives: {
     onOutsideClick: onOutsideClickDirective,
@@ -54,7 +54,7 @@ and the second parameter to the function is the
   </div>
 </template>
 <script>
-import { visibilityDirective } from 'frappe-ui'
+import { visibilityDirective } from '@yletlabs/frappe-ui'
 export default {
   directives: {
     visibility: visibilityDirective,

@@ -1,5 +1,5 @@
 import { defineConfig } from 'vitepress'
-import { lucideIcons } from '../../vite/lucideIcons'
+import { lucideIcons } from '../../packages/vite/src/lucideIcons.js'
 import path from 'path'
 import { meta } from './meta'
 import { getComponentItems } from './utils'
@@ -101,7 +101,8 @@ export default defineConfig({
     resolve: {
       alias: {
         '@/components': path.resolve(__dirname, '../components/'),
-        'frappe-ui': path.resolve(__dirname, '../../src'),
+        '@yletlabs/frappe-ui': path.resolve(__dirname, '../../packages/core/src'),
+        '@yletlabs/frappe-ui-ext': path.resolve(__dirname, '../../packages/ext/src'),
         'dayjs/esm': 'dayjs',
       },
     },

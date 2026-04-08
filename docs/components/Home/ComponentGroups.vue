@@ -6,7 +6,7 @@ import Datetime from "./dummies/Datetime.vue";
 import Overlays from "./dummies/Overlays.vue";
 import Feedback from "./dummies/Feedback.vue";
 import Charts from "./dummies/Charts.vue";
-import { Badge } from "frappe-ui";
+import { Badge } from '@yletlabs/frappe-ui';
 
 const componentGroups = {
   "Data Display": {

@@ -1,5 +1,5 @@
 import type { Theme } from 'vitepress'
-import "../../../src/fonts/Inter/inter.css"
+import "../../../packages/core/src/fonts/Inter/inter.css"
 import "../../css/style.css"
 import "../../css/shiki.css"
 import Demo from '../../components/Docs/Demo.vue'

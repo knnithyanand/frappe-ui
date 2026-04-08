@@ -1,1 +1,1 @@
-import '../../src/style.css'
+import '../../packages/core/src/style.css'
