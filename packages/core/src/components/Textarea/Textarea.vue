@@ -9,7 +9,7 @@
       :class="inputClasses"
       :disabled="disabled"
       :id="id"
-      :value="modelValue"
+      :value="model"
       :rows="rows"
       @input="handleChange"
       @change="handleChange"
@@ -19,20 +19,20 @@
 </template>
 
 <script setup lang="ts">
-import { computed, useAttrs, ref } from 'vue'
+import { computed, useAttrs, useTemplateRef } from 'vue'
 import debounce from '../../utils/debounce'
 import type { TextareaProps } from './types'
 
-const props = withDefaults(defineProps<TextareaProps>(), {
+const props = withDefaults(defineProps<Omit<TextareaProps, 'modelValue'>>(), {
   type: 'text',
   size: 'sm',
   variant: 'subtle',
   rows: 3,
 })
 
-const emit = defineEmits(['update:modelValue'])
+const model = defineModel<TextareaProps['modelValue']>()
 const attrs = useAttrs()
-const textareaRef = ref<HTMLTextAreaElement | null>(null)
+const textareaRef = useTemplateRef<HTMLTextAreaElement>('textareaRef')
 
 const inputClasses = computed(() => {
   let sizeClasses = {
@@ -85,7 +85,7 @@ const labelClasses = computed(() => {
 })
 
 let emitChange = (value: string) => {
-  emit('update:modelValue', value)
+  model.value = value
 }
 if (props.debounce) {
   emitChange = debounce(emitChange, props.debounce)

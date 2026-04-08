@@ -32,15 +32,13 @@ import type {
   ComboboxProps,
 } from './types'
 
-const props = withDefaults(defineProps<ComboboxProps>(), {
+const props = withDefaults(defineProps<Omit<ComboboxProps, 'modelValue'>>(), {
   variant: 'subtle',
   options: () => [],
 })
+const model = defineModel<ComboboxProps['modelValue']>()
 
 const emit = defineEmits<{
-  /** Emitted when the selected value changes (v-model binding) */
-  'update:modelValue': (value: string | null) => void
-
   /** Emitted when the selected option object changes */
   'update:selectedOption': (option: SimpleOption | null) => void
 
@@ -54,22 +52,21 @@ const emit = defineEmits<{
   input: (value: string) => void
 }>()
 
-
-const searchTerm = ref(getDisplayValue(props.modelValue))
-const internalModelValue = ref(props.modelValue)
+const searchTerm = ref(getDisplayValue(model.value))
+const internalModelValue = ref(model.value)
 const isOpen = ref(false)
 const userHasTyped = ref(false)
 const lastSearchTerm = ref('') // Preserve search context for custom option onClick handlers
 
 watch(
-  () => props.modelValue,
+  () => model.value,
   (newValue) => {
     internalModelValue.value = newValue
     searchTerm.value = getDisplayValue(newValue)
   },
 )
 watch(
-  () => getDisplayValue(props.modelValue),
+  () => getDisplayValue(model.value),
   (newDisplay) => {
     if (!userHasTyped.value) searchTerm.value = newDisplay
   },
@@ -99,7 +96,7 @@ const onUpdateModelValue = (value: string | null) => {
     return
   }
   internalModelValue.value = value
-  emit('update:modelValue', value)
+  model.value = value
   searchTerm.value = getDisplayValue(value)
   lastSearchTerm.value = ''
   userHasTyped.value = false
@@ -251,7 +248,7 @@ const handleInputChange = (event: Event) => {
 
   if (searchTerm.value === '') {
     internalModelValue.value = null
-    emit('update:modelValue', null)
+    model.value = null
   }
   emit('input', searchTerm.value)
 }
@@ -287,7 +284,7 @@ const reset = () => {
   searchTerm.value = ''
   userHasTyped.value = false
   internalModelValue.value = null
-  emit('update:modelValue', null)
+  model.value = null
   emit('update:selectedOption', null)
 }
 

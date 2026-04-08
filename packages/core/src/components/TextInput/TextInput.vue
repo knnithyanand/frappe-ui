@@ -21,7 +21,7 @@
       :class="inputClasses"
       :disabled="disabled"
       :id="id"
-      :value="modelValue"
+      :value="model"
       :required="required"
       @input="handleChange"
       @change="handleChange"
@@ -41,7 +41,7 @@
 </template>
 
 <script setup lang="ts">
-import { computed, useSlots, useAttrs, ref } from 'vue'
+import { computed, useSlots, useAttrs, useTemplateRef } from 'vue'
 import debounce from '../../utils/debounce'
 import type { TextInputProps } from './types'
 
@@ -49,13 +49,13 @@ defineOptions({
   inheritAttrs: false,
 })
 
-const props = withDefaults(defineProps<TextInputProps>(), {
+const props = withDefaults(defineProps<Omit<TextInputProps, 'modelValue'>>(), {
   type: 'text',
   size: 'sm',
   variant: 'subtle',
 })
 
-const emit = defineEmits(['update:modelValue'])
+const model = defineModel<TextInputProps['modelValue']>()
 const slots = useSlots()
 
 defineSlots<{
@@ -75,7 +75,7 @@ const attrsWithoutClassStyle = computed(() => {
   )
 })
 
-const inputRef = ref<HTMLInputElement | null>(null)
+const inputRef = useTemplateRef<HTMLInputElement>('inputRef')
 
 defineExpose({ el: inputRef })
 
@@ -157,7 +157,7 @@ let suffixClasses = computed(() => {
 })
 
 let emitChange = (value: string) => {
-  emit('update:modelValue', value)
+  model.value = value
 }
 if (props.debounce) {
   emitChange = debounce(emitChange, props.debounce)

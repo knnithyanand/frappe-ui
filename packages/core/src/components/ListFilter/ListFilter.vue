@@ -116,7 +116,9 @@
 </template>
 
 <script setup>
-import { Autocomplete, FeatherIcon, FormControl } from '../../index'
+import Autocomplete from '../Autocomplete/Autocomplete.vue'
+import FeatherIcon from '../FeatherIcon.vue'
+import FormControl from '../FormControl/FormControl.vue'
 import { computed, h } from 'vue'
 import FilterIcon from './FilterIcon.vue'
 import NestedPopover from './NestedPopover.vue'

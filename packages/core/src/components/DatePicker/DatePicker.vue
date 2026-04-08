@@ -217,9 +217,8 @@ import type {
   DatePickerDateObj as DateObj,
 } from './types'
 
-const props = withDefaults(defineProps<DatePickerProps>(), {
+const props = withDefaults(defineProps<Omit<DatePickerProps, 'modelValue'>>(), {
   value: '',
-  modelValue: '',
   placement: 'bottom-start',
   variant: 'subtle',
   placeholder: 'Select date',
@@ -229,6 +228,7 @@ const props = withDefaults(defineProps<DatePickerProps>(), {
   disabled: false,
   clearable: true,
 })
+const model = defineModel<DatePickerProps['modelValue']>({ default: '' })
 const emit = defineEmits<DatePickerEmits>()
 
 const { autoClose } = toRefs(props)
@@ -239,7 +239,7 @@ const currentMonth = ref<number>(dayjs().month()) // 0-index
 const DATE_FORMAT = 'YYYY-MM-DD'
 
 const selected = ref<string>('')
-const initialValue = ref(props.modelValue || props.value || '')
+const initialValue = ref(model.value || props.value || '')
 
 function coerceToDayjs(val?: string | null): Dayjs | null {
   if (!val) return null
@@ -284,11 +284,11 @@ function syncFromValue(val?: string): void {
 syncFromValue(initialValue.value)
 
 function initFromValue(): void {
-  syncFromValue(props.modelValue || props.value)
+  syncFromValue(model.value || props.value)
 }
 
 watch(
-  () => [props.modelValue, props.value],
+  () => [model.value, props.value],
   ([m, v]) => {
     const val = m || v
     syncFromValue(val)
@@ -319,7 +319,7 @@ function maybeClose(togglePopover?: () => void, condition = true) {
 function clearSelection() {
   if (!selected.value) return
   selected.value = ''
-  emit('update:modelValue', '')
+  model.value = ''
   emit('change', '')
   initialValue.value = ''
   inputValue.value = ''
@@ -373,7 +373,7 @@ function selectDate(date: string | Date | Dayjs): void {
   currentMonth.value = d.month()
 
   if (selected.value !== initialValue.value) {
-    emit('update:modelValue', selected.value)
+    model.value = selected.value
     if (selected.value !== prev) emit('change', selected.value)
     initialValue.value = selected.value
   }

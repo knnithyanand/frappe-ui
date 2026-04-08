@@ -26,15 +26,14 @@ import { ref, watch } from 'vue'
 import FeatherIcon from '../FeatherIcon.vue'
 import type { RatingProps } from './types'
 
-const props = withDefaults(defineProps<RatingProps>(), {
-  modelValue: 0,
+const props = withDefaults(defineProps<Omit<RatingProps, 'modelValue'>>(), {
   rating_from: 5,
   size: 'md',
   readonly: false,
 })
 
-const emit = defineEmits(['update:modelValue'])
-const rating = ref(props.modelValue)
+const model = defineModel<RatingProps['modelValue']>({ default: 0 })
+const rating = ref(model.value || 0)
 const hoveredRating = ref(0)
 
 const iconClasses = (index: number) => {
@@ -59,20 +58,16 @@ const iconClasses = (index: number) => {
   return classes.join(' ')
 }
 
-const emitChange = (value: number) => {
-  emit('update:modelValue', value)
-}
-
 const markRating = (index: number) => {
   if (props.readonly) return
-  emitChange(index)
+  model.value = index
   rating.value = index
 }
 
 watch(
-  () => props.modelValue,
+  () => model.value,
   (newVal) => {
-    rating.value = newVal
+    rating.value = newVal || 0
   },
 )
 </script>

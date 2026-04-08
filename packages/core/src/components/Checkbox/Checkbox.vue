@@ -14,11 +14,8 @@
       type="checkbox"
       :disabled="disabled"
       :id="htmlId"
-      :checked="Boolean(modelValue)"
-      @change="
-        (e) =>
-          $emit('update:modelValue', (e.target as HTMLInputElement).checked)
-      "
+      :checked="Boolean(model)"
+      @change="handleChange"
       v-bind="attrs"
     />
     <label class="block" :class="labelClasses" v-if="label" :for="htmlId">
@@ -31,10 +28,11 @@ import { computed, useAttrs } from 'vue'
 import { useId } from '../../utils/useId'
 import type { CheckboxProps } from './types'
 
-const props = withDefaults(defineProps<CheckboxProps>(), {
+const props = withDefaults(defineProps<Omit<CheckboxProps, 'modelValue'>>(), {
   size: 'sm',
   padding: false,
 })
+const model = defineModel<CheckboxProps['modelValue']>()
 
 const attrs = useAttrs()
 
@@ -69,4 +67,8 @@ const inputClasses = computed(() => {
 
   return [baseClasses, interactionClasses, sizeClasses]
 })
+
+const handleChange = (e: Event) => {
+  model.value = (e.target as HTMLInputElement).checked
+}
 </script>

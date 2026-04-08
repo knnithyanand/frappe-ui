@@ -18,7 +18,7 @@
 
 <script lang="ts" setup>
 import { computed } from 'vue'
-import { Button } from '../../index'
+import Button from '../Button/Button.vue'
 import type { DividerProps } from './types'
 
 const props = withDefaults(defineProps<DividerProps>(), {

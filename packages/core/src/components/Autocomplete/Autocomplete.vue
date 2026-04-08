@@ -210,7 +210,7 @@ import {
   ComboboxOption,
   ComboboxOptions,
 } from '@headlessui/vue'
-import { computed, nextTick, ref, watch } from 'vue'
+import { computed, nextTick, ref, useTemplateRef, watch } from 'vue'
 import { Popover } from '../Popover'
 import { Button } from '../Button'
 import FeatherIcon from '../FeatherIcon.vue'
@@ -222,15 +222,16 @@ import type {
   Option,
 } from './types'
 
-const props = withDefaults(defineProps<AutocompleteProps>(), {
+const props = withDefaults(defineProps<Omit<AutocompleteProps, 'modelValue'>>(), {
   multiple: false,
   maxOptions: 50,
   hideSearch: false,
   compareFn: (a, b) => a.value === b.value,
 })
-const emit = defineEmits(['update:modelValue', 'update:query', 'change'])
+const model = defineModel<AutocompleteProps['modelValue']>()
+const emit = defineEmits(['update:query', 'change'])
 
-const searchInput = ref()
+const searchInput = useTemplateRef('searchInput')
 const showOptions = ref(false)
 const query = ref('')
 
@@ -293,15 +294,15 @@ const selectedValue = computed({
   get() {
     if (!props.multiple) {
       return (
-        findOption(props.modelValue as AutocompleteOption) ||
+        findOption(model.value as AutocompleteOption) ||
         // if the modelValue is not found in the option list
         // return the modelValue as is
-        makeOption(props.modelValue as AutocompleteOption)
+        makeOption(model.value as AutocompleteOption)
       )
     }
     // in case of `multiple`, modelValue is an array of values
     // if the modelValue is a list of values, convert them to options
-    const values = (props.modelValue || []) as AutocompleteOption[]
+    const values = (model.value || []) as AutocompleteOption[]
     return isOption(values[0])
       ? values
       : values.map((v) => findOption(v) || makeOption(v))
@@ -309,7 +310,7 @@ const selectedValue = computed({
   set(val) {
     query.value = ''
     if (val && !props.multiple) showOptions.value = false
-    emit('update:modelValue', val)
+    model.value = val
     emit('change', val)
   },
 })
@@ -392,7 +393,7 @@ watch(
   },
 )
 
-const rootRef = ref()
+const rootRef = useTemplateRef('rootRef')
 
 const togglePopover = () => {
   showOptions.value = !showOptions.value

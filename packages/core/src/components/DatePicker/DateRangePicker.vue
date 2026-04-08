@@ -220,9 +220,8 @@ import type {
   DatePickerViewMode as ViewMode,
 } from './types'
 
-const props = withDefaults(defineProps<DateRangePickerProps>(), {
+const props = withDefaults(defineProps<Omit<DateRangePickerProps, 'modelValue'>>(), {
   value: '',
-  modelValue: '',
   placement: 'bottom-start',
   variant: 'subtle',
   placeholder: 'Select range',
@@ -231,6 +230,7 @@ const props = withDefaults(defineProps<DateRangePickerProps>(), {
   autoClose: true,
   disabled: false,
 })
+const model = defineModel<DateRangePickerProps['modelValue']>({ default: '' })
 const emit = defineEmits<DatePickerEmits>()
 
 const { autoClose } = toRefs(props)
@@ -309,15 +309,15 @@ function syncFromValue(val?: string | string[]) {
   if (!isTyping.value) updateInputValue()
 }
 
-const initialValue = props.modelValue || props.value || ''
+const initialValue = model.value || props.value || ''
 syncFromValue(initialValue as any)
 
 function initFromValue(): void {
-  syncFromValue(props.modelValue || props.value || '')
+  syncFromValue(model.value || props.value || '')
 }
 
 watch(
-  () => [props.modelValue, props.value],
+  () => [model.value, props.value],
   ([m, v]) => {
     const val = (m || v) as any
     syncFromValue(val)
@@ -460,11 +460,11 @@ function handleDateCellClick(
 function emitIfComplete() {
   if (fromDate.value && toDate.value) {
     const val = `${fromDate.value},${toDate.value}`
-    emit('update:modelValue', val)
+    model.value = val
     emit('change', val)
   }
   if (!fromDate.value && !toDate.value) {
-    emit('update:modelValue', '')
+    model.value = ''
     emit('change', '')
   }
 }

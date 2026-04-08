@@ -9,7 +9,8 @@
 </template>
 
 <script setup>
-import { Autocomplete, createListResource } from '../../index'
+import Autocomplete from '../Autocomplete/Autocomplete.vue'
+import { createListResource } from '../../resources'
 import { computed, ref, watch } from 'vue'
 
 const props = defineProps({

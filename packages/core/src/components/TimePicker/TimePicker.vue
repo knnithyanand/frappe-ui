@@ -79,9 +79,8 @@ import type {
   TimePickerEmits,
 } from './types'
 
-const props = withDefaults(defineProps<TimePickerProps>(), {
+const props = withDefaults(defineProps<Omit<TimePickerProps, 'modelValue'>>(), {
   value: '',
-  modelValue: '',
   interval: 15,
   options: () => [],
   placement: 'bottom-start' as Placement,
@@ -95,6 +94,7 @@ const props = withDefaults(defineProps<TimePickerProps>(), {
   minTime: '',
   maxTime: '',
 })
+const model = defineModel<TimePickerProps['modelValue']>({ default: '' })
 
 const emit = defineEmits<TimePickerEmits>()
 
@@ -108,7 +108,7 @@ let navUpdating = false
 let invalidState = false
 
 const inputRef = ref<any>(null)
-const initial = props.modelValue || props.value || ''
+const initial = model.value || props.value || ''
 const internalValue = ref<string>(initial)
 const displayValue = ref<string>('')
 displayValue.value = formatDisplay(internalValue.value)
@@ -158,7 +158,7 @@ const displayedOptions = computed<Option[]>(() => {
 })
 
 watch(
-  () => [props.modelValue, props.value],
+  () => [model.value, props.value],
   ([m, v]) => {
     const nv = m || v || ''
     if (nv && nv !== internalValue.value) {
@@ -268,7 +268,7 @@ function applyValue(val24: string, commit = false) {
   const prev = internalValue.value
   internalValue.value = val24
   displayValue.value = formatDisplay(val24)
-  if (commit || !isFocused.value) emit('update:modelValue', val24)
+  if (commit || !isFocused.value) model.value = val24
   if (commit && val24 !== prev) emit('change', val24)
   setInvalid(false)
 }
@@ -279,7 +279,7 @@ function commitInput() {
   if (!raw) {
     const prev = internalValue.value
     internalValue.value = ''
-    if (!isFocused.value) emit('update:modelValue', '')
+    if (!isFocused.value) model.value = ''
     if (prev && prev !== '') emit('change', '')
     setInvalid(false)
     return

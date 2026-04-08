@@ -245,10 +245,9 @@ interface ExtraDateTimeProps {
 }
 
 const props = withDefaults(
-  defineProps<DatePickerProps & ExtraDateTimeProps>(),
+  defineProps<Omit<DatePickerProps, 'modelValue'> & ExtraDateTimeProps>(),
   {
     value: '',
-    modelValue: '',
     placement: 'bottom-start',
     variant: 'subtle',
     placeholder: 'Select date & time',
@@ -260,6 +259,7 @@ const props = withDefaults(
     allowCustomTime: true,
   },
 )
+const model = defineModel<DatePickerProps['modelValue']>({ default: '' })
 const emit = defineEmits<DatePickerEmits>()
 
 const { autoClose } = toRefs(props)
@@ -273,7 +273,7 @@ const DATE_TIME_FORMAT = 'YYYY-MM-DD HH:mm:ss'
 const selectedDate = ref<string>('') // YYYY-MM-DD
 const timeValue = ref<string>('') // HH:mm:ss
 
-const initialValue = ref(props.modelValue || props.value || '')
+const initialValue = ref(model.value || props.value || '')
 
 function coerceDateTime(val?: string | null): Dayjs | null {
   if (!val) return null
@@ -325,11 +325,11 @@ function syncFromValue(val?: string): void {
 syncFromValue(initialValue.value)
 
 function initFromValue(): void {
-  syncFromValue(props.modelValue || props.value)
+  syncFromValue(model.value || props.value)
 }
 
 watch(
-  () => [props.modelValue, props.value],
+  () => [model.value, props.value],
   ([m, v]) => {
     const val = m || v
     syncFromValue(val)
@@ -364,7 +364,7 @@ function clearSelection() {
   if (!selectedDate.value && !timeValue.value) return
   selectedDate.value = ''
   timeValue.value = ''
-  emit('update:modelValue', '')
+  model.value = ''
   emit('change', '')
   initialValue.value = ''
   inputValue.value = ''
@@ -517,7 +517,7 @@ function emitChange(close = false, togglePopover?: () => void) {
   const systemDateTime = dayjsSystem(localDateTime).format(DATE_TIME_FORMAT)
 
   if (systemDateTime !== initialValue.value) {
-    emit('update:modelValue', systemDateTime)
+    model.value = systemDateTime
     emit('change', systemDateTime)
     initialValue.value = systemDateTime
   }

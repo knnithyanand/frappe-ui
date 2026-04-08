@@ -1,7 +1,7 @@
 <template>
   <FormControl
     :type='show ? "text" : "password"'
-    :value="modelValue || value"
+    :value="model || value"
     v-bind="$attrs"
     @keydown.meta.i.prevent="show = !show"
     @keydown.ctrl.i.prevent="show = !show"
@@ -47,10 +47,11 @@ import type { PasswordProps } from "./types";
 import { computed, ref } from "vue";
 
 const props = defineProps<PasswordProps>();
+const model = defineModel<PasswordProps['modelValue']>();
 
 const show = ref(false);
 const showEye = computed(() => {
-  let v = props.modelValue || props.value;
+  let v = model.value || props.value;
   return !v?.includes("*");
 });
 

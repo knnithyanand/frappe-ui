@@ -9,14 +9,14 @@ import {
   Avatar,
   Badge,
   Button,
-  ListHeader,
-  ListHeaderItem,
-  ListRow,
-  ListRowItem,
-  ListRows,
-  ListSelectBanner,
   ListView,
 } from '@yletlabs/frappe-ui'
+import ListHeader from '../ListHeader.vue'
+import ListHeaderItem from '../ListHeaderItem.vue'
+import ListRow from '../ListRow.vue'
+import ListRowItem from '../ListRowItem.vue'
+import ListRows from '../ListRows.vue'
+import ListSelectBanner from '../ListSelectBanner.vue'
 
 const custom_columns = reactive([
   // { label: "Name", key: "name", width: 3, icon: "user" },

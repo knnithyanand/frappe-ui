@@ -172,7 +172,7 @@ import Badge from '@yletlabs/frappe-ui/components/Badge/Badge.vue';
 import Button from '@yletlabs/frappe-ui/components/Button/Button.vue';
 import call from '@yletlabs/frappe-ui/utils/call';
 import FeatherIcon from '@yletlabs/frappe-ui/components/FeatherIcon.vue'
-import initSocket from "@yletlabs/frappe-ui/utils/socketio";
+import initSocket from "../socket/initSocket";
 import Popover from "@yletlabs/frappe-ui/components/Popover/Popover.vue"
 import TabButtons from '@yletlabs/frappe-ui/components/TabButtons/TabButtons.vue';
 

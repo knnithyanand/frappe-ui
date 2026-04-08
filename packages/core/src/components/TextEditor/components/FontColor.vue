@@ -49,7 +49,7 @@
 </template>
 <script>
 import Popover from '../../Popover/Popover.vue'
-import { Tooltip } from '../../../index'
+import Tooltip from '../../Tooltip/Tooltip.vue'
 
 export default {
   name: 'FontColor',
