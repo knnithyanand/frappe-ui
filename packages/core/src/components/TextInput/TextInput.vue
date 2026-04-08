@@ -49,11 +49,16 @@ defineOptions({
   inheritAttrs: false,
 })
 
-const props = withDefaults(defineProps<Omit<TextInputProps, 'modelValue'>>(), {
-  type: 'text',
-  size: 'sm',
-  variant: 'subtle',
-})
+const {
+  type = 'text',
+  size = 'sm',
+  variant = 'subtle',
+  placeholder,
+  disabled = false,
+  id,
+  required,
+  debounce: debounceMs,
+} = defineProps<Omit<TextInputProps, 'modelValue'>>()
 
 const model = defineModel<TextInputProps['modelValue']>()
 const slots = useSlots()
@@ -80,7 +85,7 @@ const inputRef = useTemplateRef<HTMLInputElement>('inputRef')
 defineExpose({ el: inputRef })
 
 const textColor = computed(() => {
-  return props.disabled ? 'text-ink-gray-5' : 'text-ink-gray-8'
+  return disabled ? 'text-ink-gray-5' : 'text-ink-gray-8'
 })
 
 const inputClasses = computed(() => {
@@ -89,7 +94,7 @@ const inputClasses = computed(() => {
     md: 'text-base rounded h-8',
     lg: 'text-lg rounded-md h-10',
     xl: 'text-xl rounded-md h-10',
-  }[props.size]
+  }[size]
 
   let paddingClasses = {
     sm: [
@@ -112,9 +117,9 @@ const inputClasses = computed(() => {
       slots.prefix ? 'pl-10' : 'pl-3',
       slots.suffix ? 'pr-10' : 'pr-3',
     ],
-  }[props.size]
+  }[size]
 
-  let variant = props.disabled ? 'disabled' : props.variant
+  let inputVariant = disabled ? 'disabled' : variant
   let variantClasses = {
     subtle:
       'border border-[--surface-gray-2] bg-surface-gray-2 placeholder-ink-gray-4 hover:border-outline-gray-modals hover:bg-surface-gray-3 focus:bg-surface-white focus:border-outline-gray-4 focus:shadow-sm focus:ring-0 focus-visible:ring-2 focus-visible:ring-outline-gray-3',
@@ -122,12 +127,12 @@ const inputClasses = computed(() => {
       'border border-outline-gray-2 bg-surface-white placeholder-ink-gray-4 hover:border-outline-gray-3 hover:shadow-sm focus:bg-surface-white focus:border-outline-gray-4 focus:shadow-sm focus:ring-0 focus-visible:ring-2 focus-visible:ring-outline-gray-3',
     disabled: [
       'border bg-surface-gray-1 placeholder-ink-gray-3',
-      props.variant === 'outline'
+      variant === 'outline'
         ? 'border-outline-gray-2'
         : 'border-transparent',
     ],
     ghost: 'border-0 focus:ring-0 focus-visible:ring-0',
-  }[variant]
+  }[inputVariant]
 
   return [
     sizeClasses,
@@ -144,7 +149,7 @@ let prefixClasses = computed(() => {
     md: 'pl-2.5',
     lg: 'pl-3',
     xl: 'pl-3',
-  }[props.size]
+  }[size]
 })
 
 let suffixClasses = computed(() => {
@@ -153,14 +158,14 @@ let suffixClasses = computed(() => {
     md: 'pr-2.5',
     lg: 'pr-3',
     xl: 'pr-3',
-  }[props.size]
+  }[size]
 })
 
 let emitChange = (value: string) => {
   model.value = value
 }
-if (props.debounce) {
-  emitChange = debounce(emitChange, props.debounce)
+if (debounceMs) {
+  emitChange = debounce(emitChange, debounceMs)
 }
 
 let handleChange = (e: Event) => {

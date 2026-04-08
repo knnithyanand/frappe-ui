@@ -46,12 +46,12 @@ import Tooltip from "../Tooltip/Tooltip.vue";
 import type { PasswordProps } from "./types";
 import { computed, ref } from "vue";
 
-const props = defineProps<PasswordProps>();
+const { value } = defineProps<Omit<PasswordProps, 'modelValue'>>();
 const model = defineModel<PasswordProps['modelValue']>();
 
 const show = ref(false);
 const showEye = computed(() => {
-  let v = model.value || props.value;
+  let v = model.value || value;
   return !v?.includes("*");
 });
 
