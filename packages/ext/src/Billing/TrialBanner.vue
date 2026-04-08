@@ -5,7 +5,7 @@
   >
     <div class="flex flex-col gap-1">
       <div class="inline-flex text-ink-gray-9 gap-2 items-center font-medium">
-        <FeatherIcon class="h-4" name="info" />
+        <FrappeIcon class="h-4" name="info" />
         {{ trialTitle }}
       </div>
       <div class="text-ink-gray-7 text-p-sm">
@@ -24,7 +24,7 @@
 </template>
 <script setup>
 import LightningIcon from '../../icons/LightningIcon.vue'
-import FeatherIcon from '@yletlabs/frappe-ui/components/FeatherIcon.vue'
+import FrappeIcon from '@yletlabs/frappe-ui/components/FrappeIcon.vue'
 import { Button } from '@yletlabs/frappe-ui/components/Button/index.ts'
 import { createResource } from '@yletlabs/frappe-ui/resources'
 import { ref, computed } from 'vue'

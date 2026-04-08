@@ -10,7 +10,7 @@
       class="relative flex"
       :class="{ 'items-center': isNormalInput || type == 'select' }"
     >
-      <FeatherIcon
+      <FrappeIcon
         v-if="iconLeft && type != 'checkbox'"
         :name="iconLeft"
         class="absolute mx-2 h-4 w-4 text-gray-600"
@@ -81,13 +81,13 @@
 
 <script>
 import debounce from '../utils/debounce.ts'
-import FeatherIcon from './FeatherIcon.vue'
+import FrappeIcon from './FrappeIcon.vue'
 
 export default {
   name: 'Input',
   inheritAttrs: false,
   expose: ['getInputValue'],
-  components: { FeatherIcon },
+  components: { FrappeIcon },
   props: {
     label: {
       type: String,

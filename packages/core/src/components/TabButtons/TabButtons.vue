@@ -1,74 +1,57 @@
 <template>
-  <RadioGroup v-model="value">
-    <div
-      class="flex space-x-0.5 rounded-md bg-surface-gray-2 h-7 items-center px-[1px] text-sm"
+  <div
+    class="flex space-x-0.5 rounded-md bg-surface-gray-2 h-7 items-center px-[1px] text-sm"
+    role="tablist"
+  >
+    <Button
+      v-for="button in buttons"
+      :key="button.label"
+      v-bind="button"
+      class="!h-6.5"
+      :disabled="button.disabled"
+      role="tab"
+      :aria-selected="isSelected(button)"
+      :class="[
+        isSelected(button) && '!bg-surface-white text-ink-gray-8 shadow',
+        !button.disabled && !isSelected(button) ? '!text-ink-gray-5' : '',
+      ]"
+      @click="onSelect(button)"
     >
-      <RadioGroupOption
-        as="div"
-        v-for="button in buttons"
-        :key="button.label"
-        :disabled="button.disabled"
-        :value="button.value ?? button.label"
-        v-slot="{ active, checked }"
-      >
-        <Button
-          @click="button.onClick"
-          v-bind="button"
-          class="!h-6.5"
-          :class="[
-            active ? 'ring-outline-gray-2 focus-visible:ring' : '',
-            checked && '!bg-surface-white',
-            button.disabled
-              ? ''
-              : checked
-                ? ' text-ink-gray-8 shadow'
-                : '!text-ink-gray-5',
-          ]"
-        >
-          <RadioGroupLabel
-            as="span"
-            class="flex h-4 items-center"
-            v-show="button.label && !button.hideLabel"
-            >{{ button.label }}</RadioGroupLabel
-          >
-        </Button>
-      </RadioGroupOption>
-    </div>
-  </RadioGroup>
+      <span class="flex h-4 items-center" v-show="button.label && !button.hideLabel">
+        {{ button.label }}
+      </span>
+    </Button>
+  </div>
 </template>
-<script>
-import { RadioGroup, RadioGroupLabel, RadioGroupOption } from '@headlessui/vue'
-import FeatherIcon from '../FeatherIcon.vue'
+
+<script setup>
+import { computed } from 'vue'
 import Button from '../Button/Button.vue'
 
-export default {
-  name: 'TabButtons',
-  props: {
-    buttons: {
-      type: Array,
-      required: true,
-    },
-    modelValue: {
-      type: [String, Boolean, Number],
-    },
+const props = defineProps({
+  buttons: {
+    type: Array,
+    required: true,
   },
-  emits: ['update:modelValue'],
-  components: {
-    Button,
-    FeatherIcon,
-    RadioGroup,
-    RadioGroupOption,
-    RadioGroupLabel,
+  modelValue: {
+    type: [String, Boolean, Number],
   },
-  computed: {
-    value: {
-      get() {
-        return this.modelValue
-      },
-      set(value) {
-        this.$emit('update:modelValue', value)
-      },
-    },
-  },
+})
+
+const emit = defineEmits(['update:modelValue'])
+
+const value = computed({
+  get: () => props.modelValue,
+  set: (nextValue) => emit('update:modelValue', nextValue),
+})
+
+const buttonValue = (button) => button.value ?? button.label
+
+const isSelected = (button) => value.value === buttonValue(button)
+
+const onSelect = (button) => {
+  if (button.disabled) return
+  value.value = buttonValue(button)
+  button.onClick?.()
 }
 </script>

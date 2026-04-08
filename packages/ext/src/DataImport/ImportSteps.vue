@@ -6,7 +6,7 @@
         }"
         @click="emit('updateStep', 'upload', { ...data })"
         >
-            <FeatherIcon v-if="uploadStepCompleted" name="check" class="size-5 text-sm border rounded-[5px] p-0.5" :class="{
+            <FrappeIcon v-if="uploadStepCompleted" name="check" class="size-5 text-sm border rounded-[5px] p-0.5" :class="{
                 'text-ink-white bg-surface-gray-7': onUploadStep,
             }"/>
             <div v-else class="text-sm border rounded-[5px] px-1.5 py-0.5" :class="{
@@ -27,7 +27,7 @@
         }"
         @click="moveToMapStep()"
         >
-            <FeatherIcon v-if="mapStepCompleted" name="check" class="size-5 text-sm border rounded-[5px] p-0.5" :class="{
+            <FrappeIcon v-if="mapStepCompleted" name="check" class="size-5 text-sm border rounded-[5px] p-0.5" :class="{
                 'text-ink-white bg-surface-gray-7': onMapStep,
             }"/>
             <div v-else class="text-sm border rounded-[5px] px-1.5 py-0.5" :class="{
@@ -48,7 +48,7 @@
         }"
         @click="moveToPreviewStep()"
         >
-            <FeatherIcon v-if="previewStepCompleted" name="check" class="size-5 text-sm border rounded-[5px] p-0.5" :class="{
+            <FrappeIcon v-if="previewStepCompleted" name="check" class="size-5 text-sm border rounded-[5px] p-0.5" :class="{
                 'text-ink-white bg-surface-gray-7': onPreviewStep,
             }"/>
             <div v-else class="text-sm border rounded-[5px] px-1.5 py-0.5" :class="{
@@ -67,7 +67,7 @@
 <script setup lang="ts">
 import type { DataImport } from './types'
 import { computed } from 'vue'
-import FeatherIcon from '@yletlabs/frappe-ui/components/FeatherIcon.vue'
+import FrappeIcon from '@yletlabs/frappe-ui/components/FrappeIcon.vue'
 
 const emit = defineEmits(['updateStep'])
 

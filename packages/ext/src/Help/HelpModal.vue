@@ -20,7 +20,7 @@
           />
         </Button>
         <Button variant="ghost" @click="show = false">
-          <FeatherIcon name="x" class="h-3.5" />
+          <FrappeIcon name="x" class="h-3.5" />
         </Button>
       </div>
     </div>
@@ -65,7 +65,7 @@ import { useOnboarding } from '../Onboarding/onboarding'
 import { showHelpCenter } from '../HelpCenter/helpCenter'
 import { minimize } from '../Help/help'
 import { onMounted, computed } from 'vue'
-import FeatherIcon from '@yletlabs/frappe-ui/components/FeatherIcon.vue'
+import FrappeIcon from '@yletlabs/frappe-ui/components/FrappeIcon.vue'
 
 const props = defineProps({
   appName: {

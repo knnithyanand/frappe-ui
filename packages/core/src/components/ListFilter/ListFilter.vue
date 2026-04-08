@@ -96,7 +96,7 @@
                   label="Add filter"
                 >
                   <template #prefix>
-                    <FeatherIcon name="plus" class="h-4" />
+                    <FrappeIcon name="plus" class="h-4" />
                   </template>
                 </Button>
               </template>
@@ -117,7 +117,7 @@
 
 <script setup>
 import Autocomplete from '../Autocomplete/Autocomplete.vue'
-import FeatherIcon from '../FeatherIcon.vue'
+import FrappeIcon from '../FrappeIcon.vue'
 import FormControl from '../FormControl/FormControl.vue'
 import { computed, h } from 'vue'
 import FilterIcon from './FilterIcon.vue'

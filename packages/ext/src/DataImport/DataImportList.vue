@@ -11,7 +11,7 @@
 			</div>
             <Button variant="solid" @click="showModal = true">
                 <template #prefix>
-                    <FeatherIcon name="plus" class="size-4 stroke-1.5" />
+                    <FrappeIcon name="plus" class="size-4 stroke-1.5" />
                 </template>
                 Import
             </Button>
@@ -60,7 +60,7 @@
             <div class="my-5 flex justify-center">
                 <Button v-if="props.dataImports.hasNextPage" @click="props.dataImports.next()">
                     <template #prefix>
-                        <FeatherIcon name="refresh-cw" class="size-4 stroke-1.5" />
+                        <FrappeIcon name="refresh-cw" class="size-4 stroke-1.5" />
                     </template>
                     Load More
                 </Button>
@@ -108,7 +108,7 @@ import type { BadgeProps } from '@yletlabs/frappe-ui/components/Badge/types'
 import { toast } from "@yletlabs/frappe-ui/components/Toast/index"
 import Button from '@yletlabs/frappe-ui/components/Button/Button.vue'
 import Dialog from '@yletlabs/frappe-ui/components/Dialog/Dialog.vue'
-import FeatherIcon from '@yletlabs/frappe-ui/components/FeatherIcon.vue'
+import FrappeIcon from '@yletlabs/frappe-ui/components/FrappeIcon.vue'
 import FormControl from '@yletlabs/frappe-ui/components/FormControl/FormControl.vue'
 import Link from "../Link/Link.vue"
 

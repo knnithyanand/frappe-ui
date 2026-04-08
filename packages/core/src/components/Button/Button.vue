@@ -19,7 +19,7 @@
         }"
       />
       <slot name="prefix" v-else-if="$slots['prefix'] || iconLeft">
-        <FeatherIcon
+        <FrappeIcon
           v-if="iconLeft && typeof iconLeft === 'string'"
           :name="iconLeft"
           :class="slotClasses"
@@ -30,7 +30,7 @@
 
       <template v-if="loading && loadingText">{{ loadingText }}</template>
       <template v-else-if="isIconButton && !loading">
-        <FeatherIcon
+        <FrappeIcon
           v-if="icon && typeof icon === 'string'"
           :name="icon"
           :class="slotClasses"
@@ -46,7 +46,7 @@
       </span>
 
       <slot name="suffix">
-        <FeatherIcon
+        <FrappeIcon
           v-if="iconRight && typeof iconRight === 'string'"
           :name="iconRight"
           :class="slotClasses"
@@ -63,7 +63,7 @@
 </template>
 <script lang="ts" setup>
 import { computed, useSlots, ref } from 'vue'
-import FeatherIcon from '../FeatherIcon.vue'
+import FrappeIcon from '../FrappeIcon.vue'
 import LoadingIndicator from '../LoadingIndicator.vue'
 import { useRouter } from 'vue-router'
 import type { ButtonProps, ThemeVariant } from './types'

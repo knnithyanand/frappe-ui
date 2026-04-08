@@ -30,7 +30,7 @@
                 @drop.prevent="(e) =>  uploadFile(e)" 
                 class="h-[300px] flex items-center justify-center bg-surface-gray-1 border border-dashed border-outline-gray-3 rounded-md">
                 <div v-if="showFileSelector && !uploading" class="w-4/5 lg:w-2/5 text-center">
-                    <FeatherIcon name="upload-cloud" class="size-6 stroke-1.5 text-ink-gray-6 mx-auto mb-2.5" />
+                    <FrappeIcon name="upload-cloud" class="size-6 stroke-1.5 text-ink-gray-6 mx-auto mb-2.5" />
                     <input
                         ref="fileInput"
                         type="file"
@@ -74,7 +74,7 @@
                             {{ convertToKB(importFile.file_size) }}
                         </div>
                     </div>
-                    <FeatherIcon 
+                    <FrappeIcon 
                         name="trash-2" 
                         class="size-4 stroke-1.5 text-ink-red-3 cursor-pointer"
                         @click="deleteFile"
@@ -84,7 +84,7 @@
 
             <div v-else-if="showSheetSelector" class="flex flex-col h-[300px] p-4 border border-dashed border-outline-gray-3 rounded-md">
                 <div class="flex items-center space-x-2 text-ink-gray-7">
-                    <FeatherIcon name="chevron-left" class="size-4 cursor-pointer" @click="backToFileSelector" />
+                    <FrappeIcon name="chevron-left" class="size-4 cursor-pointer" @click="backToFileSelector" />
                     <div>
                         Google Sheet
                     </div>
@@ -128,11 +128,11 @@
                     <template v-slot="{ open }">
                         <Button variant="ghost">
                             <template #prefix>
-                                <FeatherIcon name="download" class="size-4 stroke-1.5" />
+                                <FrappeIcon name="download" class="size-4 stroke-1.5" />
                             </template>
                             Download CSV Template
                             <template #suffix>
-                                <FeatherIcon name="chevron-down" :class="[
+                                <FrappeIcon name="chevron-down" :class="[
                                     'w-4 h-4 stroke-1.5 ml-1 transform transition-transform',
                                     open ? 'rotate-180' : '',
                                 ]" />
@@ -159,7 +159,7 @@ import { fieldsToIgnore, getChildTableName, getBadgeColor } from './dataImport'
 import Badge from '@yletlabs/frappe-ui/components/Badge/Badge.vue'
 import Button from '@yletlabs/frappe-ui/components/Button/Button.vue'
 import Dropdown from '@yletlabs/frappe-ui/components/Dropdown/Dropdown.vue'
-import FeatherIcon from '@yletlabs/frappe-ui/components/FeatherIcon.vue'
+import FrappeIcon from '@yletlabs/frappe-ui/components/FrappeIcon.vue'
 import FileUploadHandler from '@yletlabs/frappe-ui/utils/fileUploadHandler';
 import TemplateModal from './TemplateModal.vue'
 

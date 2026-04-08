@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import Story from "@/components/Story.vue";
 import { reactive, ref } from "vue";
-// import FeatherIcon from "../FeatherIcon.vue";
+// import FrappeIcon from "../FrappeIcon.vue";
 import LucideSearch from "~icons/lucide/search";
 import { Avatar, FormControl } from '@yletlabs/frappe-ui';
 

@@ -32,7 +32,7 @@
 
             <template v-for="item in group.items" :key="item.label">
               <div v-if="item.switch" :class="cssClasses.itemButton">
-                <FeatherIcon
+                <FrappeIcon
                   v-if="item.icon && typeof item.icon === 'string'"
                   :name="item.icon"
                   :class="[cssClasses.itemIcon, getIconColor(item)]"
@@ -75,7 +75,7 @@
                         getSubmenuBackgroundColor(item),
                       ]"
                     >
-                      <FeatherIcon
+                      <FrappeIcon
                         v-if="item.icon && typeof item.icon === 'string'"
                         :name="item.icon"
                         :class="[cssClasses.itemIcon, getIconColor(item)]"
@@ -93,7 +93,7 @@
                       <span :class="[cssClasses.itemLabel, getTextColor(item)]">
                         {{ item.label }}
                       </span>
-                      <FeatherIcon
+                      <FrappeIcon
                         name="chevron-right"
                         :class="[cssClasses.chevronIcon, getIconColor(item)]"
                         aria-hidden="true"
@@ -124,7 +124,7 @@
                             v-if="subItem.switch"
                             :class="cssClasses.itemButton"
                           >
-                            <FeatherIcon
+                            <FrappeIcon
                               v-if="
                                 subItem.icon && typeof subItem.icon === 'string'
                               "
@@ -181,7 +181,7 @@
                                 getBackgroundColor(subItem),
                               ]"
                             >
-                              <FeatherIcon
+                              <FrappeIcon
                                 v-if="
                                   subItem.icon &&
                                   typeof subItem.icon === 'string'
@@ -224,7 +224,7 @@
                   v-else
                   :class="[cssClasses.itemButton, getBackgroundColor(item)]"
                 >
-                  <FeatherIcon
+                  <FrappeIcon
                     v-if="item.icon && typeof item.icon === 'string'"
                     :name="item.icon"
                     :class="[cssClasses.itemIcon, getIconColor(item)]"
@@ -265,7 +265,7 @@ import {
   DropdownMenuSubContent,
 } from 'reka-ui'
 import { Button } from '../Button'
-import FeatherIcon from '../FeatherIcon.vue'
+import FrappeIcon from '../FrappeIcon.vue'
 import { ref, computed, useAttrs } from 'vue'
 import { useRouter } from 'vue-router'
 import type {

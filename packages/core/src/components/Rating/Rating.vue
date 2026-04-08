@@ -10,7 +10,7 @@
         @mouseover="() => !readonly && (hoveredRating = index)"
         @mouseleave="() => !readonly && (hoveredRating = 0)"
       >
-        <FeatherIcon
+        <FrappeIcon
           name="star"
           class="fill-gray-300 text-transparent mr-0.5"
           :class="iconClasses(index)"
@@ -23,7 +23,7 @@
 
 <script setup lang="ts">
 import { ref, watch } from 'vue'
-import FeatherIcon from '../FeatherIcon.vue'
+import FrappeIcon from '../FrappeIcon.vue'
 import type { RatingProps } from './types'
 
 const props = withDefaults(defineProps<Omit<RatingProps, 'modelValue'>>(), {

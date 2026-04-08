@@ -2,7 +2,7 @@
   <div :class="switchGroupClasses">
     <div class="flex flex-col gap-1">
       <div class="flex items-center">
-        <FeatherIcon
+        <FrappeIcon
           v-if="icon && typeof icon === 'string'"
           :name="icon"
           :class="iconClasses"
@@ -37,7 +37,7 @@
 <script lang="ts" setup>
 import { computed, watch } from 'vue'
 import { useId } from '../../utils/useId'
-import FeatherIcon from '../FeatherIcon.vue'
+import FrappeIcon from '../FrappeIcon.vue'
 import { SwitchRoot, SwitchThumb } from 'reka-ui'
 import type { SwitchProps } from './types'
 

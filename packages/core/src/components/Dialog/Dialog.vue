@@ -48,7 +48,7 @@
                               class="flex h-7 w-7 flex-shrink-0 items-center justify-center rounded-full"
                               :class="dialogIconBgClasses"
                             >
-                              <FeatherIcon
+                              <FrappeIcon
                                 :name="icon.name"
                                 class="h-4 w-4"
                                 :class="dialogIconClasses"
@@ -124,7 +124,7 @@ import {
 } from 'reka-ui'
 import { computed, reactive } from 'vue'
 import { Button } from '../Button'
-import FeatherIcon from '../FeatherIcon.vue'
+import FrappeIcon from '../FrappeIcon.vue'
 import LucideX from '~icons/lucide/x'
 import type {
   DialogProps,

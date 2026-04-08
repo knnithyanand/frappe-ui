@@ -32,7 +32,7 @@
                         {{ map[0] }}
                     </div>
                     <div class="flex justify-end">
-                        <FeatherIcon name="arrow-right" class="inline size-4 text-ink-gray-5" />
+                        <FrappeIcon name="arrow-right" class="inline size-4 text-ink-gray-5" />
                     </div>
                     <div>
                         {{ map[1] }}
@@ -47,7 +47,7 @@
             </div>
             <div class="rounded-md bg-surface-amber-2 p-2 space-y-2 text-xs">
                 <div v-for="warning in warnings" class="flex items-center space-x-2">
-                    <FeatherIcon name="alert-circle" class="size-3 text-ink-amber-3" />
+                    <FrappeIcon name="alert-circle" class="size-3 text-ink-amber-3" />
                     <div v-html="warning.message" class="text-ink-amber-3"></div>
                 </div>
             </div>
@@ -145,7 +145,7 @@
                             <td class="px-3 py-2 text-ink-gray-5 float-right invisible group-hover:visible">
                                 <Popover v-if="row.exception" trigger="hover" placement="left-start">
                                     <template #target>
-                                        <FeatherIcon name="info" class="size-4" />
+                                        <FrappeIcon name="info" class="size-4" />
                                     </template>
                                     <template #body-main>
                                         <div class="w-[500px] p-2 text-xs leading-5 font-mono">
@@ -171,7 +171,7 @@ import type { DataImport, DataImports } from './types';
 import Badge from '@yletlabs/frappe-ui/components/Badge/Badge.vue';
 import Button from '@yletlabs/frappe-ui/components/Button/Button.vue';
 import call from '@yletlabs/frappe-ui/utils/call';
-import FeatherIcon from '@yletlabs/frappe-ui/components/FeatherIcon.vue'
+import FrappeIcon from '@yletlabs/frappe-ui/components/FrappeIcon.vue'
 import initSocket from "../socket/initSocket";
 import Popover from "@yletlabs/frappe-ui/components/Popover/Popover.vue"
 import TabButtons from '@yletlabs/frappe-ui/components/TabButtons/TabButtons.vue';

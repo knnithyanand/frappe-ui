@@ -11,13 +11,13 @@
       <p v-if="!showPercentage">{{ step }}</p>
       <p v-else>{{ progress.toFixed(0) }}%</p>
     </div>
-    <FeatherIcon v-else name="check" class="check-icon" />
+    <FrappeIcon v-else name="check" class="check-icon" />
   </div>
 </template>
 
 <script setup lang="ts">
 import { computed } from 'vue'
-import FeatherIcon from '../FeatherIcon.vue'
+import FrappeIcon from '../FrappeIcon.vue'
 import type { CircularProgressBarProps, Size, SizeProps } from './types'
 
 const props = withDefaults(defineProps<CircularProgressBarProps>(), {

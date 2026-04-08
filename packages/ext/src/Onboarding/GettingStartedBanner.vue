@@ -25,7 +25,7 @@
             {{ 'You are all set' }}
           </div>
         </div>
-        <FeatherIcon
+        <FrappeIcon
           name="x"
           class="h-4 cursor-pointer"
           @click="
@@ -47,7 +47,7 @@
       @click="openOnboarding"
     >
       <template #prefix>
-        <FeatherIcon name="chevrons-right" class="size-4" />
+        <FrappeIcon name="chevrons-right" class="size-4" />
       </template>
     </Button>
   </div>
@@ -58,7 +58,7 @@
 <script setup>
 import StepsIcon from '../../icons/StepsIcon.vue'
 import Button from '@yletlabs/frappe-ui/components/Button/Button.vue'
-import FeatherIcon from '@yletlabs/frappe-ui/components/FeatherIcon.vue'
+import FrappeIcon from '@yletlabs/frappe-ui/components/FrappeIcon.vue'
 import { useOnboarding } from './onboarding'
 import { showHelpCenter } from '../HelpCenter/helpCenter'
 import { showHelpModal, minimize } from '../Help/help'

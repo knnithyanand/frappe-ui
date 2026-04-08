@@ -8,7 +8,7 @@
         :debounce="300"
       >
         <template #prefix>
-          <FeatherIcon name="search" class="h-4 text-ink-gray-5" />
+          <FrappeIcon name="search" class="h-4 text-ink-gray-5" />
         </template>
       </TextInput>
     </div>
@@ -17,7 +17,7 @@
     >
       <div>All articles</div>
       <Button variant="ghost" @click="openDocs">
-        <FeatherIcon name="arrow-up-right" class="h-4 text-ink-gray-5" />
+        <FrappeIcon name="arrow-up-right" class="h-4 text-ink-gray-5" />
       </Button>
     </div>
     <div class="flex flex-col gap-1.5 overflow-y-auto">
@@ -31,7 +31,7 @@
           @click="a.opened = !a.opened"
         >
           <div class="flex items-center gap-2">
-            <FeatherIcon
+            <FrappeIcon
               :name="a.opened ? 'chevron-down' : 'chevron-right'"
               class="h-4 text-ink-gray-5"
             />
@@ -46,12 +46,12 @@
             @click="() => openDoc(subArticle.name)"
           >
             <div class="flex items-center gap-2">
-              <FeatherIcon name="file-text" class="h-4 text-ink-gray-5" />
+              <FrappeIcon name="file-text" class="h-4 text-ink-gray-5" />
               <div class="text-base text-ink-gray-8">
                 {{ subArticle.title }}
               </div>
             </div>
-            <FeatherIcon
+            <FrappeIcon
               name="arrow-up-right"
               class="h-4 hidden group-hover:flex text-ink-gray-5"
             />
@@ -63,7 +63,7 @@
 </template>
 <script setup>
 import Button from '@yletlabs/frappe-ui/components/Button/Button.vue'
-import FeatherIcon from '@yletlabs/frappe-ui/components/FeatherIcon.vue'
+import FrappeIcon from '@yletlabs/frappe-ui/components/FrappeIcon.vue'
 import TextInput from '@yletlabs/frappe-ui/components/TextInput/TextInput.vue'
 import { ref, computed, onMounted } from 'vue'
 
