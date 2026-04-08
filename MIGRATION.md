@@ -55,6 +55,14 @@ These decisions are locked. Do not reopen them during implementation.
 | Editor styles | **Internal source only; not a separate public CSS artifact** | The migration requires a single public stylesheet from the core package. |
 | Legacy policy | **No broad compatibility layer** | The migration must not preserve two generations of APIs long-term. |
 | Publish contract | **No source-file exports** | Published packages must be dist-based, stable, and bundler-safe. |
+| ECharts + grid-layout-plus dependency model | **Bundled as runtime deps in `packages/core`** | Both components are in the public API allowlist. Making them peer deps forces all consumers to install them even when only using a few charts. Since they are first-class public components, bundled runtime deps is the simpler and more reliable choice. |
+| socket.io-client / initSocket | **Remove from core; move to `packages/ext`** | Socket.IO is Frappe-specific WebSocket plumbing, not generic UI. It does not belong in the core package. `packages/ext` is the correct home for Frappe-specific runtime integration. |
+| TextEditor + TipTap | **Keep in `packages/core`** | TextEditor is in the public component allowlist and TipTap (~20 ProseMirror packages) is its required runtime. Splitting to `packages/ext` would add complexity without matching benefit. Consumers who do not use TextEditor should tree-shake it. |
+| TextEditor sub-exports | **Make internal to TextEditor; do not export from the core barrel** | `TextEditorBubbleMenu`, `TextEditorFixedMenu`, `TextEditorFloatingMenu`, `createEditorButton`, and the image/suggestion extensions are implementation details of TextEditor. They should remain importable internally but not be part of the stable public API surface. |
+| Vue 3.5 API modernization | **In scope for Workstream 3** | `defineModel`, `useTemplateRef`, and reactive props destructure are part of the Vue 3.5+ modernization goal. These should be adopted during the migration, not deferred to a follow-up pass. |
+| Vue devDependency alignment | **Upgrade repo-internal `vue` devDependency to `^3.5.0`** | The repo currently declares `peerDependencies: vue >=3.5.0` but `devDependencies: vue ^3.3.0`. The repo's own test/build/dev environment must match the target baseline before Vue 3.5 APIs are adopted. |
+| Reka UI | **Keep `reka-ui` as a runtime dependency of the core package** | Reka UI (v2.5.0) is already the active replacement for Headless UI in 11+ core components (Dialog, Popover, Tooltip, Toast, Switch, Slider, Select, Combobox, Dropdown, MultiSelect, Tabs). It must be explicitly acknowledged as a kept dependency, not left ambiguous. |
+| Test infrastructure (MSW/mocks) | **Each package owns its own mock/test-infra files** | MSW handlers currently live in `src/mocks/`. In the workspace layout, each published package that has tests must own its test fixtures and mock handlers. Shared test utilities that cross package boundaries live at the workspace root under a `test-utils/` directory. |
 
 ### Must preserve
 
@@ -100,15 +108,27 @@ frappe-ui/
 │  │     ├─ icons/
 │  │     ├─ styles/
 │  │     ├─ utils/
+│  │     ├─ __mocks__/            # MSW handlers for testing (not published)
 │  │     └─ index.ts
 │  ├─ ext/
 │  │  ├─ package.json            # @yletlabs/frappe-ui-ext
 │  │  ├─ vite.config.ts
 │  │  └─ src/
 │  │     ├─ components/
+│  │     │  ├─ Billing/
+│  │     │  ├─ DataImport/
+│  │     │  ├─ Filter/
+│  │     │  ├─ Help/
+│  │     │  ├─ HelpCenter/
+│  │     │  ├─ Link/
+│  │     │  ├─ Onboarding/
+│  │     │  └─ drive/
 │  │     ├─ auth/
 │  │     ├─ session/
+│  │     ├─ socket/
+│  │     ├─ telemetry/
 │  │     ├─ helpers/
+│  │     ├─ __mocks__/            # MSW handlers for testing (not published)
 │  │     └─ index.ts
 │  └─ vite/
 │     ├─ package.json            # @yletlabs/frappe-ui-vite
@@ -118,6 +138,7 @@ frappe-ui/
 │        ├─ frappeTypes.ts
 │        ├─ jinjaBootData.ts
 │        ├─ lucideIcons.ts
+│        ├─ siteBanner.ts
 │        └─ index.ts
 └─ modernisation/                # research and migration planning notes
 ```
@@ -192,13 +213,14 @@ Required import migration table:
 | `src/composables/**` | Move reusable public items to `packages/core/src/composables/**` |
 | `src/directives/**` | Move to `packages/core/src/directives/**` |
 | `src/utils/**` | Split into `packages/core/src/utils/**` or `packages/ext/src/helpers/**`; delete legacy-only utilities |
+| `src/mocks/**` | Move to `packages/core/src/__mocks__/**`; each package creates its own test-infra directory as needed |
 | `icons/**` | Move to `packages/core/src/icons/**` |
 | `src/style.css` | Replace with `packages/core/src/styles/index.css` and Tailwind v4 CSS-first structure |
 | `src/resources/**` | Delete |
 | `src/components/Resource.vue` | Delete |
 | `src/components/Input.vue` | Replace with focused components or delete if redundant |
 | `src/components/FeatherIcon.vue` | Delete after Lucide/custom icon migration |
-| `frappe/**` | Move to `packages/ext/src/**` and narrow to high-level integrations only |
+| `frappe/**` | Move to `packages/ext/src/**` and narrow to high-level integrations only; see [section 6.2](#62-yletlabsfrappe-ui-ext-packagesext) for the explicit module disposition table |
 | `vite/**` | Move to `packages/vite/src/**` |
 | `tailwind/**`, `tailwind.config.js`, `postcss.config.ts` | Remove from final architecture; replace with Tailwind v4 CSS-first tokens and Vite integration |
 | `docs/**` | Keep, but consume workspace packages instead of aliasing the old root `src` tree |
@@ -236,7 +258,37 @@ This package owns:
 - session/auth helpers,
 - high-level Frappe components,
 - higher-level convenience helpers built on the core package,
-- Frappe-specific integration patterns that should not live in the generic core package.
+- Frappe-specific integration patterns that should not live in the generic core package,
+- `initSocket` and socket.io-client WebSocket integration (moved from core).
+
+#### Module disposition table
+
+The current `frappe/` directory contains multiple modules. Each module's fate is documented here:
+
+| Current module | Disposition | Target location |
+|---|---|---|
+| `frappe/session.js` | **Move** | `packages/ext/src/session/` |
+| `frappe/index.js`, `frappe/index.d.ts` | **Replace** | Rebuild as `packages/ext/src/index.ts` |
+| `frappe/Billing/` | **Move** | `packages/ext/src/components/Billing/` |
+| `frappe/DataImport/` | **Move** | `packages/ext/src/components/DataImport/` |
+| `frappe/Filter/` | **Move** | `packages/ext/src/components/Filter/` |
+| `frappe/Help/` | **Move** | `packages/ext/src/components/Help/` |
+| `frappe/HelpCenter/` | **Move** | `packages/ext/src/components/HelpCenter/` |
+| `frappe/Link/` | **Move** | `packages/ext/src/components/Link/` |
+| `frappe/Onboarding/` | **Move** | `packages/ext/src/components/Onboarding/` |
+| `frappe/drive/` | **Move** | `packages/ext/src/components/drive/` |
+| `frappe/telemetry/` | **Move** | `packages/ext/src/telemetry/` |
+| `frappe/Icons/` | **Drop** | Custom icons that belong in the core package should move to `packages/core/src/icons/`; Frappe-only icons that are unused can be deleted. |
+
+#### Dependency boundary prerequisite
+
+Many modules in `frappe/` currently import `../../src/...` internals and use legacy `createResource` APIs directly. Before the physical move, each module must be refactored to:
+
+1. import only from the public API of `@yletlabs/frappe-ui` (the core package),
+2. replace any `createResource` / `createListResource` / `createDocumentResource` usage with the typed composables (`useCall`, `useDoc`, `useList`),
+3. replace any `FeatherIcon` usage with Lucide or custom icon alternatives.
+
+This refactoring is a prerequisite for Workstream 2 and should be completed as part of that workstream.
 
 This package must **not** own:
 
@@ -254,7 +306,8 @@ This package owns:
 - `buildConfig`,
 - `frappeTypes`,
 - `jinjaBootData`,
-- `lucideIcons`.
+- `lucideIcons`,
+- `siteBanner`.
 
 This package must be publishable independently and depend only on what is necessary.
 
@@ -348,6 +401,7 @@ Must export:
   - `setConfig`
   - `getConfig`
   - `confirmDialog`
+  - `toast`
 - component, composable, and utility types tied to the exported surface above.
 
 Must not export:
@@ -375,6 +429,13 @@ Must not export:
 - `resourcesPlugin`
 - `initSocket`
 - `pageMetaPlugin`
+- `CommandPaletteItem`
+- `TextEditorBubbleMenu`
+- `TextEditorFixedMenu`
+- `TextEditorFloatingMenu`
+- `createEditorButton`
+- TextEditor image extension
+- TextEditor suggestion extension
 - the old install plugin / global-properties surface
 
 Justification and relocation map:
@@ -402,8 +463,15 @@ Justification and relocation map:
 | `createListResource` | Legacy async API that duplicates the typed composable layer. | Use [useList](./packages/core/src/data-fetching/useList/) |
 | `createDocumentResource` | Legacy async API that duplicates the typed composable layer. | Use [useDoc](./packages/core/src/data-fetching/useDoc/) |
 | `resourcesPlugin` | Plugin wrapper around the old resources architecture. | Use [typed data-fetching composables](./packages/core/src/data-fetching/) directly |
-| `initSocket` | Low-level transport detail should not be part of the generic core UI contract. | If still required, move to [ext helpers](./packages/ext/src/helpers/) |
+| `initSocket` | Frappe-specific WebSocket plumbing; it does not belong in the generic core UI package. | Moved to [`packages/ext/src/socket/`](./packages/ext/src/socket/) — import `initSocket` from `@yletlabs/frappe-ui-ext` |
 | `pageMetaPlugin` | Old plugin-style API is unnecessary when a direct composable already exists. | Use [usePageMeta](./packages/core/src/utils/pageMeta.ts) |
+| `CommandPaletteItem` | Internal composition detail of CommandPalette; it is not a standalone primitive. | Internal only: [CommandPalette internals](./packages/core/src/components/CommandPalette/) |
+| `TextEditorBubbleMenu` | Implementation detail of TextEditor, not a standalone component. | Internal only: [TextEditor internals](./packages/core/src/components/TextEditor/) |
+| `TextEditorFixedMenu` | Implementation detail of TextEditor, not a standalone component. | Internal only: [TextEditor internals](./packages/core/src/components/TextEditor/) |
+| `TextEditorFloatingMenu` | Implementation detail of TextEditor, not a standalone component. | Internal only: [TextEditor internals](./packages/core/src/components/TextEditor/) |
+| `createEditorButton` | Implementation detail of TextEditor toolbars, not a stable utility. | Internal only: [TextEditor internals](./packages/core/src/components/TextEditor/) |
+| TextEditor image extension | Implementation detail of TextEditor rich-text extensions. | Internal only: [TextEditor extensions](./packages/core/src/components/TextEditor/extensions/) |
+| TextEditor suggestion extension | Implementation detail of TextEditor rich-text extensions. | Internal only: [TextEditor extensions](./packages/core/src/components/TextEditor/extensions/) |
 | old install plugin / global-properties surface | Implicit globals hide dependencies and preserve legacy ergonomics that this migration is intentionally removing. | Use direct named imports from the packages in the [consumer contract](#33-consumer-contract) |
 
 #### `@yletlabs/frappe-ui-ext`
@@ -439,6 +507,7 @@ Must export:
 - `frappeTypes`
 - `jinjaBootData`
 - `lucideIcons`
+- `siteBanner`
 
 Must not export:
 
@@ -491,12 +560,17 @@ Use Vite capabilities wherever they replace older build plumbing.
 
 ### 8.1 Required Vite usage
 
-- `build.lib` for all published packages
+- `build.lib` for all **browser/UI** published packages (`packages/core` and `packages/ext`)
 - `rollupOptions.external` for peer/runtime externals
 - ES and CJS outputs
 - source maps
 - one CSS output from the core package
 - Vite dev and preview for app/doc/example surfaces
+
+> **Important — `packages/vite` is a Node.js package, not a browser package.**
+> It contains Vite plugins that run in Node at build time. Do **not** use Vite lib mode to build `packages/vite`.
+> Use `tsc --module NodeNext` (or `tsup` if dual CJS/ESM output is needed).
+> The `npm create vite` template generates a browser app; replace it with a `tsconfig.json`-only Node package layout.
 
 ### 8.2 Core package build requirements
 
@@ -614,9 +688,10 @@ The build artifact must physically be `dist/frappe-ui.css`.
 
 Implementation must explicitly revisit these:
 
-- remove `@headlessui/vue`
-- remove `@popperjs/core` if replacement succeeds
-- remove `radix-vue` if still unused
+- remove `@headlessui/vue` — currently used in 4 components: Autocomplete, CommandPalette (Listbox), ListFilter/NestedPopover, TabButtons
+- remove `@popperjs/core` — **blocked on completing the Headless UI → Reka UI migration first**; do not attempt removal until all 4 Headless UI holdouts are migrated
+- remove `radix-vue` — present in dependencies but superseded by `reka-ui`; confirm no remaining imports before deleting
+- **keep `reka-ui`** — actively used in 11+ core components (Dialog, Popover, Tooltip, Toast, Switch, Slider, Select, Combobox, Dropdown, MultiSelect, Tabs) as the Headless UI replacement; this is a kept runtime dependency of `packages/core`
 - remove `feather-icons`
 - move build-time packages out of runtime `dependencies`
 - move Vite/unplugin tooling out of runtime deps if only used for build/docs
@@ -628,8 +703,53 @@ At minimum, audit and reclassify packages like:
 - `unplugin-auto-import`
 - `unplugin-icons`
 - `unplugin-vue-components`
+- `ora` — move to `packages/vite` `devDependencies`; it is a CLI spinner used only in Vite plugin build scripts, not at runtime
+- `lucide-static` — move to `packages/vite` `dependencies`; it is consumed by the `lucideIcons` Vite plugin at build time, not by the UI runtime
 
 These do not belong in runtime dependencies if they are only used in build/docs/dev flows.
+
+### 10.4 FeatherIcon migration inventory
+
+FeatherIcon is used in **27 files** across the codebase. Each usage must be replaced with a Lucide icon (via the Vite `lucideIcons` auto-import) or a custom icon from `packages/core/src/icons/` before FeatherIcon can be deleted.
+
+**Files in `src/components/` (18):**
+
+| File | Notes |
+|---|---|
+| `Alert.vue` | Replace with Lucide equivalent |
+| `Autocomplete.vue` | Replace with Lucide equivalent |
+| `Button.vue` | Replace with Lucide equivalent |
+| `Calendar/EventModalContent.vue` | Replace with Lucide equivalent |
+| `CircularProgressBar.vue` | Replace with Lucide equivalent |
+| `CommandPalette.vue` | Replace with Lucide equivalent |
+| `DatePicker.vue` | Replace with Lucide equivalent |
+| `DateRangePicker.vue` | Replace with Lucide equivalent |
+| `DateTimePicker.vue` | Replace with Lucide equivalent |
+| `Dialog.vue` | Replace with Lucide equivalent |
+| `Dropdown.vue` | Replace with Lucide equivalent |
+| `Input.vue` | File is deleted in the migration; no replacement needed |
+| `ListFilter.vue` | Replace with Lucide equivalent |
+| `Rating.vue` | Replace with Lucide equivalent |
+| `Switch.vue` | Replace with Lucide equivalent |
+| `TabButtons.vue` | Component is deleted in the migration; no replacement needed |
+| `TimePicker.vue` | Replace with Lucide equivalent |
+| `Tree.vue` | Replace with Lucide equivalent |
+
+**Files in `frappe/` (9):**
+
+| File | Notes |
+|---|---|
+| `Billing/SignupBanner.vue` | Replace when moving to `packages/ext` |
+| `Billing/TrialBanner.vue` | Replace when moving to `packages/ext` |
+| `DataImport/DataImportList.vue` | Replace when moving to `packages/ext` |
+| `DataImport/ImportSteps.vue` | Replace when moving to `packages/ext` |
+| `DataImport/PreviewStep.vue` | Replace when moving to `packages/ext` |
+| `DataImport/UploadStep.vue` | Replace when moving to `packages/ext` |
+| `HelpCenter/HelpCenter.vue` | Replace when moving to `packages/ext` |
+| `Help/HelpModal.vue` | Replace when moving to `packages/ext` |
+| `Onboarding/GettingStartedBanner.vue` | Replace when moving to `packages/ext` |
+
+This migration must be completed during Workstream 5 for `src/components/` files and during Workstream 2 for `frappe/` files (as part of the ext package dependency boundary refactoring).
 
 ---
 
@@ -690,7 +810,7 @@ Every moved capability mentioned in docs must show its new package and import pa
 - **stylelint**
 - **axe** checks (`vitest-axe` and/or Storybook a11y addon)
 
-### 12.2 Cypress policy
+### 12.2 Cypress policy and test migration strategy
 
 Remove Cypress unless a concrete browser-only gap is discovered that Vitest + Storybook + example-app testing cannot cover.
 
@@ -701,7 +821,37 @@ A valid Cypress exception must meet **all** of these conditions:
 3. the behavior matters to shipped package behavior,
 4. the retained Cypress coverage is documented in the repo with a short justification.
 
-### 12.3 Example app
+#### Test coverage migration plan
+
+The codebase currently has **32 Cypress component tests** and only **4 Vitest tests**. Removing Cypress without migrating this coverage would result in significant regression risk.
+
+Required migration steps:
+
+1. **Inventory all 32 Cypress component tests** and classify each as:
+   - **Critical** — must be rewritten as a Vitest component test (using `@vue/test-utils` + jsdom or happy-dom),
+   - **Visual/interaction** — migrate to Storybook interaction tests (using `@storybook/test` play functions),
+   - **Drop** — the test covers deleted/legacy components (e.g., `TabButtons`, `Input`) and does not need migration.
+
+2. **Write Vitest replacements for all critical tests** before deleting the Cypress tests.
+
+3. **Write Storybook interaction tests** for visual/interaction tests that cannot be meaningfully covered in jsdom.
+
+4. **Delete Cypress** only after the coverage migration is complete and verified.
+
+This work is part of Workstream 7 and must be completed before the final validation checklist can pass.
+
+### 12.3 Test infrastructure and mocks
+
+Each published package that has tests must own its mock/test-infra files:
+
+- `packages/core/src/__mocks__/` — MSW handlers for core data-fetching composable tests
+- `packages/ext/src/__mocks__/` — MSW handlers for ext-specific integration tests (if needed)
+
+Shared test utilities that cross package boundaries (e.g., `waitUntilValueChanges`, `baseUrl` helpers) live at the workspace root under a `test-utils/` directory and are consumed as a workspace dependency.
+
+The current `src/mocks/` directory should be moved to `packages/core/src/__mocks__/` during Workstream 2.
+
+### 12.4 Example app
 
 Create `examples/playground` as a Vite app that:
 
@@ -711,7 +861,7 @@ Create `examples/playground` as a Vite app that:
 - exercises the main component/composable flows,
 - is used in CI to ensure the public package contract works.
 
-### 12.4 Published-artifact validation
+### 12.5 Published-artifact validation
 
 CI must also validate the packed artifact:
 
@@ -811,7 +961,9 @@ npm create vite@latest packages/core -- --template vue-ts
 npm create vite@latest packages/ext -- --template vue-ts
 npm create vite@latest packages/vite -- --template vanilla-ts
 npm create vite@latest examples/playground -- --template vue-ts
-npm create vitepress@latest docs
+# docs/ already exists — do NOT scaffold fresh with npm create vitepress
+# Instead, update docs/.vitepress/config.ts and docs/package.json in-place
+# to consume workspace packages instead of aliasing the old root src tree
 npm create storybook@latest
 ```
 
@@ -838,7 +990,9 @@ Tasks:
 - add `pnpm-workspace.yaml`,
 - move root publish metadata out of the root package,
 - add shared root scripts for workspace orchestration,
-- pin Node 22 and pnpm via repo config.
+- pin Node 22 by adding `.nvmrc` containing `22` to the repo root,
+- pin pnpm by adding `"packageManager": "pnpm@9.x.x"` (use the exact installed version) to the root `package.json`,
+- add `"engines": { "node": ">=22", "pnpm": ">=9" }` to the root `package.json`.
 
 Deliverables:
 
@@ -855,12 +1009,20 @@ Tasks:
 - create `packages/vite`,
 - move files according to the move map,
 - update imports and barrels,
-- add package-specific `package.json`, `vite.config.ts`, and tsconfig files.
+- add package-specific `package.json`, `vite.config.ts`, and tsconfig files,
+- **refactor `frappe/` modules** to satisfy the dependency boundary prerequisite documented in [section 6.2](#62-yletlabsfrappe-ui-ext-packagesext): replace all `../../src/...` internal imports with public API imports from `@yletlabs/frappe-ui`, replace legacy `createResource` / `createListResource` / `createDocumentResource` usage with typed composables, and replace `FeatherIcon` usage with Lucide/custom icon alternatives,
+- **internal repo-wide import rewrite** — update all internal imports across docs, stories, and tooling:
+  - replace VitePress aliases like `frappe-ui` → `../../src` with workspace package imports,
+  - update docs scripts and transformers that hardcode `src/components/.../stories/...` paths,
+  - update story files to import from workspace packages instead of relative source paths,
+  - ensure no remaining imports reference the old root `src/` tree directly,
+- move `src/mocks/` to `packages/core/src/__mocks__/` and set up per-package test infrastructure.
 
 Deliverables:
 
 - all package code moved under `packages/*`,
-- no published surface left at the root.
+- no published surface left at the root,
+- all internal imports use workspace package names, not source-tree relative paths.
 
 ### Workstream 3 — Rebuild the core package contract
 
@@ -870,7 +1032,11 @@ Tasks:
 - export named components and composables,
 - keep typed data-fetching composables in core,
 - delete legacy resources exports,
-- remove default plugin-style public API unless absolutely necessary.
+- remove default plugin-style public API unless absolutely necessary,
+- **Vue 3.5 modernization** — adopt these APIs across all components:
+  - replace `defineProps` + `defineEmits` two-way binding with `defineModel` in all form input components (`TextInput`, `Textarea`, `Switch`, `Checkbox`, `Select`, `Combobox`, `Rating`, `Slider`, `DatePicker`, `TimePicker`, `DateRangePicker`, `DateTimePicker`, `MonthPicker`, `Password`, `MultiSelect`, `Autocomplete`),
+  - replace `ref()` template ref + `defineExpose` access patterns with `useTemplateRef` where applicable,
+  - adopt reactive props destructure (`const { label, disabled } = defineProps<…>()`) where props are consumed in `<script setup>` logic.
 
 Deliverables:
 
@@ -898,11 +1064,20 @@ Deliverables:
 
 Tasks:
 
-- replace Headless UI holdouts,
-- remove FeatherIcon usage,
-- remove Popper if no longer needed,
+- replace Headless UI holdouts (4 remaining components: Autocomplete, CommandPalette, ListFilter/NestedPopover, TabButtons) with Reka UI or native Vue implementations,
+- **migrate all FeatherIcon usage** in `src/components/` (18 files) to Lucide or custom icons — see [section 10.4](#104-feathericon-migration-inventory) for the complete inventory,
+- remove `@popperjs/core` — **only after** all Headless UI holdouts are migrated (ordering dependency),
+- remove `radix-vue` after confirming no remaining imports,
+- remove `feather-icons` after all FeatherIcon usage is migrated,
 - delete unused/duplicate dependencies,
-- move build-only packages to `devDependencies`.
+- move build-only packages to `devDependencies`,
+- **upgrade Vue devDependency** from `^3.3.0` to `^3.5.0` to match the `peerDependencies` baseline.
+
+Ordering constraints:
+
+1. Headless UI → Reka UI migration must complete before `@popperjs/core` removal,
+2. FeatherIcon → Lucide migration must complete before `feather-icons` removal,
+3. Vue devDependency upgrade should happen early in this workstream to unblock Vue 3.5 API adoption.
 
 Deliverables:
 
@@ -932,7 +1107,12 @@ Deliverables:
 Tasks:
 
 - add ESLint, Prettier, stylelint, axe checks,
-- remove or justify Cypress,
+- **migrate Cypress test coverage** according to the [test migration strategy in section 12.2](#122-cypress-policy-and-test-migration-strategy):
+  - inventory all 32 Cypress component tests,
+  - classify each as critical (→ Vitest), visual/interaction (→ Storybook), or drop (covers deleted components),
+  - write Vitest replacements for critical tests,
+  - write Storybook interaction tests for visual/interaction tests,
+  - remove Cypress only after coverage migration is verified,
 - add GitHub Actions workflows,
 - add Changesets,
 - add pack validation.
@@ -989,9 +1169,17 @@ The migration is not complete until all of these are true:
 - pack validation passes
 - legacy resources layer is gone
 - Headless UI is gone
-- FeatherIcon is gone
+- `radix-vue` is gone (superseded by `reka-ui`)
+- `reka-ui` is an explicit runtime dependency of the core package
+- FeatherIcon is gone (all 27 usages migrated to Lucide/custom icons)
+- `@popperjs/core` is gone
 - Tailwind v3 config-first architecture is gone
+- Cypress test coverage has been migrated (critical → Vitest, visual → Storybook)
 - Cypress is gone unless explicitly justified by a retained browser-only workflow
+- Vue devDependency is `^3.5.0` or higher
+- all internal imports use workspace package names (no `../../src/` cross-boundary imports)
+- all `frappe/` modules have been moved to `packages/ext` per the module disposition table
+- MSW mocks are placed per-package under `__mocks__/` directories
 
 ### 16.1 Post-migration stabilization and cleanup
 
