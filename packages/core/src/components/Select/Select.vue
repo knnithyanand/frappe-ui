@@ -101,7 +101,7 @@ defineSlots<{
 <template>
   <SelectRoot v-model="model">
     <SelectTrigger
-      class="inline-flex items-center gap-2 outline-none text-base text-ink-gray-7 data-[placeholder]:text-ink-gray-4 data-[disabled]:text-ink-gray-4"
+      class="inline-flex items-center gap-2 outline-hidden text-base text-ink-gray-7 data-[placeholder]:text-ink-gray-4 data-[disabled]:text-ink-gray-4"
       aria-label="Customise options"
       :class="[selectClasses, $attrs.class]"
       :disabled="disabled"

@@ -36,7 +36,7 @@
               </template>
               <template #body="{ close }">
                 <ul
-                  class="p-1.5 mt-2 rounded-lg bg-surface-modal shadow-2xl ring-1 ring-black ring-opacity-5 focus:outline-none"
+                  class="p-1.5 mt-2 rounded-lg bg-surface-modal shadow-2xl ring-1 ring-black ring-opacity-5 focus:outline-hidden"
                 >
                   <li
                     v-for="option in button"

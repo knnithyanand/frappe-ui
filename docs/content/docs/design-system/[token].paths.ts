@@ -1,110 +1,106 @@
-import resolveConfig from 'tailwindcss/resolveConfig'
-import config from '../../../../tailwind.config'
+import fs from 'fs'
 
-const designTokens = resolveConfig(config).theme
+const tokensPath = new URL(
+  '../../../../packages/core/src/styles/tokens.css',
+  import.meta.url,
+)
+const tokensCss = fs.readFileSync(tokensPath, 'utf8')
 
-const getBgColors = () => {
-  let colors: { name: string; value?: string }[] = []
-  const list = designTokens.backgroundColor.surface
-
-  for (const [key, value] of Object.entries(list)) {
-    const classname = `bg-surface-${key}`
-
-    if (colors.length > 0) {
-      const lastcolor = colors.at(-1).name.split('-')[2]
-      const curColor = key.split('-')[0]
-      if (lastcolor !== curColor) colors.push({ name: curColor })
-    }
-
-    colors.push({ name: classname, value })
+function parseVarsFromBlock(selector: string): Record<string, string> {
+  const escaped = selector.replace(/[.*+?^${}()|[\]\\]/g, '\\$&')
+  const match = tokensCss.match(new RegExp(`${escaped}\\s*\\{([\\s\\S]*?)\\}`))
+  if (!match) return {}
+  const vars: Record<string, string> = {}
+  for (const line of match[1].split('\n')) {
+    const trimmed = line.trim()
+    if (!trimmed.startsWith('--') || !trimmed.includes(':')) continue
+    const [name, ...valueParts] = trimmed.replace(/;$/, '').split(':')
+    vars[name.trim()] = valueParts.join(':').trim()
   }
-
-  return colors
+  return vars
 }
 
-const bgColors = getBgColors()
+const rootVars = parseVarsFromBlock(':root')
 
-const getTextColors = () => {
-  let colors: { name: string; value?: string }[] = []
-  const list = designTokens.textColor.ink
+function groupedClassTokens(
+  varPrefix: string,
+  classPrefix: string,
+): { name: string; value?: string }[] {
+  const tokens = Object.keys(rootVars)
+    .filter((key) => key.startsWith(varPrefix))
+    .map((key) => ({
+      className: `${classPrefix}${key.slice(varPrefix.length)}`,
+      value: rootVars[key],
+    }))
+    .sort((a, b) => a.className.localeCompare(b.className))
 
-  for (const [key, value] of Object.entries(list)) {
-    const classname = `text-ink-${key}`
-
-    if (colors.length > 0) {
-      const lastcolor = colors.at(-1).name.split('-')[2]
-      const curColor = key.split('-')[0]
-      if (lastcolor !== curColor) colors.push({ name: curColor })
+  const grouped: { name: string; value?: string }[] = []
+  let previousGroup = ''
+  for (const token of tokens) {
+    const group = token.className.split('-')[2] || token.className
+    if (group !== previousGroup) {
+      grouped.push({ name: group })
+      previousGroup = group
     }
-
-    colors.push({ name: classname, value })
+    grouped.push({ name: token.className, value: token.value })
   }
-
-  return colors
+  return grouped
 }
 
-const txtColors = getTextColors()
+const bgColors = groupedClassTokens('--surface-', 'bg-surface-')
+const txtColors = groupedClassTokens('--ink-', 'text-ink-')
+const borderColors = groupedClassTokens('--outline-', 'border-outline-')
 
-const getBorderColors = () => {
-  let colors: { name: string; value?: string }[] = []
-  const list = designTokens.borderColor.outline
+const fontSize = [
+  ['2xs', ['11px', { lineHeight: '1.15', letterSpacing: '0.01em', fontWeight: '420' }]],
+  ['xs', ['12px', { lineHeight: '1.15', letterSpacing: '0.02em', fontWeight: '420' }]],
+  ['sm', ['13px', { lineHeight: '1.15', letterSpacing: '0.02em', fontWeight: '420' }]],
+  ['base', ['14px', { lineHeight: '1.15', letterSpacing: '0.02em', fontWeight: '420' }]],
+  ['lg', ['16px', { lineHeight: '1.15', letterSpacing: '0.02em', fontWeight: '400' }]],
+  ['xl', ['18px', { lineHeight: '1.15', letterSpacing: '0.01em', fontWeight: '400' }]],
+  ['2xl', ['20px', { lineHeight: '1.15', letterSpacing: '0.01em', fontWeight: '400' }]],
+  ['p-2xs', ['11px', { lineHeight: '1.6', letterSpacing: '0.01em', fontWeight: '420' }]],
+  ['p-xs', ['12px', { lineHeight: '1.6', letterSpacing: '0.02em', fontWeight: '420' }]],
+  ['p-sm', ['13px', { lineHeight: '1.5', letterSpacing: '0.02em', fontWeight: '420' }]],
+  ['p-base', ['14px', { lineHeight: '1.5', letterSpacing: '0.02em', fontWeight: '420' }]],
+  ['p-lg', ['16px', { lineHeight: '1.5', letterSpacing: '0.02em', fontWeight: '400' }]],
+  ['p-xl', ['18px', { lineHeight: '1.42', letterSpacing: '0.01em', fontWeight: '400' }]],
+  ['p-2xl', ['20px', { lineHeight: '1.38', letterSpacing: '0.01em', fontWeight: '400' }]],
+  ['p-3xl', ['24px', { lineHeight: '1.2', letterSpacing: '0.005em', fontWeight: '400' }]],
+].map(([name, value]) => ({ name, value }))
 
-  for (const [key, value] of Object.entries(list)) {
-    const classname = `border-outline-${key}`
+const fontWeight = [
+  ['normal', 400],
+  ['medium', 500],
+  ['semibold', 600],
+  ['bold', 700],
+].map(([name, value]) => ({ name, value }))
 
-    if (colors.length > 0) {
-      const lastcolor = colors.at(-1).name.split('-')[2]
-      const curColor = key.split('-')[0]
-      if (lastcolor !== curColor) colors.push({ name: curColor })
-    }
+const letterSpacing = [
+  ['normal', '0em'],
+  ['tight', '-0.025em'],
+  ['wide', '0.025em'],
+  ['wider', '0.05em'],
+].map(([name, value]) => ({ name, value }))
 
-    colors.push({ name: classname, value })
-  }
+const lineHeight = [
+  ['none', '1'],
+  ['tight', '1.25'],
+  ['snug', '1.375'],
+  ['normal', '1.5'],
+  ['relaxed', '1.625'],
+  ['loose', '2'],
+].map(([name, value]) => ({ name, value }))
 
-  return colors
-}
-
-const borderColors = getBorderColors()
-
-const fontSize = Object.entries(designTokens.fontSize).map(([name, value]) => ({
-  name,
-  value,
-}))
-
-const fontWeight = Object.entries(designTokens.fontWeight).map(
-  ([name, value]) => ({
-    name,
-    value,
-  }),
-)
-
-const letterSpacing = Object.entries(designTokens.letterSpacing).map(
-  ([name, value]) => ({
-    name,
-    value,
-  }),
-)
-
-const lineHeight = Object.entries(designTokens.lineHeight).map(
-  ([name, value]) => ({
-    name,
-    value,
-  }),
-)
-
-// const dropShadow = Object.entries(designTokens.dropShadow).map(
-//   ([name, value]) => ({
-//     name,
-//     value,
-//   }),
-// )
-
-const borderRadius = Object.entries(designTokens.borderRadius).map(
-  ([name, value]) => ({
-    name,
-    value,
-  }),
-)
+const borderRadius = [
+  ['sm', '0.25rem'],
+  ['DEFAULT', '0.5rem'],
+  ['md', '0.625rem'],
+  ['lg', '0.75rem'],
+  ['xl', '1rem'],
+  ['2xl', '1.25rem'],
+  ['full', '9999px'],
+].map(([name, value]) => ({ name, value }))
 
 export default {
   paths() {

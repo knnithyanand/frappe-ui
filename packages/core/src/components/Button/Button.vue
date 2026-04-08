@@ -117,10 +117,10 @@ const buttonClasses = computed(() => {
   }[props.theme]
 
   let focusClasses = {
-    gray: 'focus-visible:ring focus-visible:ring-outline-gray-3',
-    blue: 'focus-visible:ring focus-visible:ring-blue-400',
-    green: 'focus-visible:ring focus-visible:ring-outline-green-2',
-    red: 'focus-visible:ring focus-visible:ring-outline-red-2',
+    gray: 'focus-visible:ring-3 focus-visible:ring-outline-gray-3',
+    blue: 'focus-visible:ring-3 focus-visible:ring-blue-400',
+    green: 'focus-visible:ring-3 focus-visible:ring-outline-green-2',
+    red: 'focus-visible:ring-3 focus-visible:ring-outline-red-2',
   }[props.theme]
 
   let variantClasses = {
@@ -178,7 +178,7 @@ const buttonClasses = computed(() => {
   }
 
   return [
-    'inline-flex items-center justify-center gap-2 transition-colors focus:outline-none shrink-0',
+    'inline-flex items-center justify-center gap-2 transition-colors focus:outline-hidden shrink-0',
     isDisabled.value ? disabledClasses : variantClasses,
     focusClasses,
     sizeClasses,

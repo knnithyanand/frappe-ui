@@ -185,7 +185,7 @@ function setCursorBeforeIframe() {
   <NodeViewWrapper>
     <div
       ref="containerRef"
-      class="relative overflow-hidden not-prose my-6 rounded-lg block max-w-full focus:outline-none"
+      class="relative overflow-hidden not-prose my-6 rounded-lg block max-w-full focus:outline-hidden"
       :class="[
         { 'ring-2 ring-outline-gray-3 ring-offset-2': selected },
         node.attrs.align === 'center' ? 'mx-auto' : '',
@@ -292,7 +292,7 @@ function setCursorBeforeIframe() {
       <input
         v-if="(isEditable || node.attrs.title) && node.attrs.src"
         :value="node.attrs.title"
-        class="w-full text-center bg-transparent text-sm text-ink-gray-6 h-7 border-0 mt-2 focus:outline-none focus:ring-0 placeholder-ink-gray-4 disabled:opacity-60"
+        class="w-full text-center bg-transparent text-sm text-ink-gray-6 h-7 border-0 mt-2 focus:outline-hidden focus:ring-0 placeholder-ink-gray-4 disabled:opacity-60"
         placeholder="Add caption"
         :disabled="!isEditable"
         @input="(e) => props.updateAttributes({ title: (e.target as HTMLInputElement).value })"

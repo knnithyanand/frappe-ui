@@ -1,0 +1,4 @@
+@import '../components/TextEditor/style.css';
+@import '../components/TextEditor/extensions/highlight/highlight-styles.css';
+@import '../components/TextEditor/extensions/color/color-styles.css';
+@import '../components/TextEditor/extensions/mention/style.css';

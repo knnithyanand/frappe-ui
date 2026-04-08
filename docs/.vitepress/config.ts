@@ -5,6 +5,7 @@ import { meta } from './meta'
 import { getComponentItems } from './utils'
 import { transformerStyleToClass } from '@shikijs/transformers'
 import componentTransformer from './plugins/componentTransformer'
+import tailwindcss from '@tailwindcss/vite'
 import fs from 'fs'
 
 // needed for transforming shiki inline styles to classes
@@ -97,7 +98,7 @@ export default defineConfig({
     ],
   },
   vite: {
-    plugins: [lucideIcons()],
+    plugins: [tailwindcss(), lucideIcons()],
     resolve: {
       alias: {
         '@/components': path.resolve(__dirname, '../components/'),

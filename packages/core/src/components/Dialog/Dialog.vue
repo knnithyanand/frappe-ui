@@ -2,7 +2,7 @@
   <DialogRoot v-model:open="isOpen" @update:open="handleOpenChange">
     <DialogPortal>
       <DialogOverlay
-        class="fixed inset-0 bg-black-overlay-200 dark:bg-black-overlay-700 overflow-y-auto dialog-overlay outline-none"
+        class="fixed inset-0 bg-black-overlay-200 dark:bg-black-overlay-700 overflow-y-auto dialog-overlay outline-hidden"
         :data-dialog="options.title"
         @after-leave="$emit('after-leave')"
       >
@@ -12,7 +12,7 @@
           :style="dialogPositionStyles"
         >
           <DialogContent
-            class="my-8 inline-block w-full transform overflow-hidden rounded-xl bg-surface-modal text-left align-middle shadow-xl dialog-content focus-visible:outline-none"
+            class="my-8 inline-block w-full transform overflow-hidden rounded-xl bg-surface-modal text-left align-middle shadow-xl dialog-content focus-visible:outline-hidden"
             :class="{
               'max-w-7xl': options.size === '7xl',
               'max-w-6xl': options.size === '6xl',

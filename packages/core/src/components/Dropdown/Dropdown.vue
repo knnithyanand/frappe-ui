@@ -402,7 +402,7 @@ const groupHasIcons = (group: DropdownGroupOption) => {
 const cssClasses = {
   // Container classes
   dropdownContent:
-    'min-w-40 divide-y divide-outline-gray-modals rounded-lg bg-surface-modal shadow-2xl ring-1 ring-black ring-opacity-5 focus:outline-none dropdown-content',
+    'min-w-40 divide-y divide-outline-gray-modals rounded-lg bg-surface-modal shadow-2xl ring-1 ring-black ring-opacity-5 focus:outline-hidden dropdown-content',
   groupContainer: 'p-1.5',
 
   // Label classes
@@ -416,9 +416,9 @@ const cssClasses = {
 
   // Button classes
   itemButton:
-    'group flex h-7 w-full items-center rounded px-2 text-base focus:outline-none',
+    'group flex h-7 w-full items-center rounded px-2 text-base focus:outline-hidden',
   submenuTrigger:
-    'group flex h-7 w-full items-center rounded px-2 text-base text-ink-gray-6 focus:outline-none',
+    'group flex h-7 w-full items-center rounded px-2 text-base text-ink-gray-6 focus:outline-hidden',
 }
 
 const groups = computed(() => {

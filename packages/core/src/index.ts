@@ -1,3 +1,5 @@
+import './style.css'
+
 // components
 export * from './components/Alert'
 export * from './components/Autocomplete'

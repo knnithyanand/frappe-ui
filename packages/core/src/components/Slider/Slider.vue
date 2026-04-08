@@ -30,7 +30,7 @@ withDefaults(defineProps<SliderProps>(), {
         shadow-md
         transition-shadow duration-200 ease-out
         hover:ring-[6px] ring-gray-600/20 dark:ring-gray-100/20
-        focus:outline-none
+        focus:outline-hidden
       "
       aria-label="Volume"
     />

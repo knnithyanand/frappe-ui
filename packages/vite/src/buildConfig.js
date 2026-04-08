@@ -38,7 +38,7 @@ export function buildConfig(options = {}) {
           outDir: mergedOptions.outDir,
           emptyOutDir: mergedOptions.emptyOutDir,
           commonjsOptions: {
-            include: [/tailwind.config.js/, /node_modules/],
+            include: [/node_modules/],
           },
           sourcemap: mergedOptions.sourcemap,
         },

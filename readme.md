@@ -56,15 +56,10 @@ app.use(FrappeUI)
 app.mount('#app')
 ```
 
-In your `tailwind.config.js` file, include the frappe-ui preset:
+Import the stylesheet once in your app entry:
 
 ```js
-module.exports = {
-  presets: [
-    require('frappe-ui/src/utils/tailwind.config')
-  ],
-  ...
-}
+import '@yletlabs/frappe-ui/style.css'
 ```
 
 Now, you can import needed components and start using it:
