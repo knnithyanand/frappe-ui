@@ -14,7 +14,7 @@ const checkerOptions: MetaCheckerOptions = {
 }
 
 const tsconfigChecker = createChecker(
-  path.join(__dirname, '../../tsconfig.json'),
+  path.join(__dirname, '../../packages/core/tsconfig.json'),
   checkerOptions,
 )
 
