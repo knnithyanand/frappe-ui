@@ -7,7 +7,6 @@
   "files": [
     "dist"
   ],
-  "main": "./dist/frappe-ui.cjs.js",
   "module": "./dist/frappe-ui.es.js",
   "types": "./src/index.ts",
   "sideEffects": [
@@ -16,8 +15,7 @@
   "exports": {
     ".": {
       "types": "./src/index.ts",
-      "import": "./dist/frappe-ui.es.js",
-      "require": "./dist/frappe-ui.cjs.js"
+      "import": "./dist/frappe-ui.es.js"
     },
     "./style.css": "./dist/frappe-ui.css",
     "./components/*": "./src/components/*",

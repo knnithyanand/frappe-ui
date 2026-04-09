@@ -1,4 +1,4 @@
-module.exports = {
+export default {
   ignoreFiles: [
     '**/dist/**',
     '**/node_modules/**',

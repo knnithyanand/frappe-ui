@@ -7,14 +7,12 @@
   "files": [
     "dist"
   ],
-  "main": "./dist/frappe-ui-ext.cjs.js",
   "module": "./dist/frappe-ui-ext.es.js",
   "types": "./src/index.d.ts",
   "exports": {
     ".": {
       "types": "./src/index.d.ts",
-      "import": "./dist/frappe-ui-ext.es.js",
-      "require": "./dist/frappe-ui-ext.cjs.js"
+      "import": "./dist/frappe-ui-ext.es.js"
     }
   },
   "scripts": {

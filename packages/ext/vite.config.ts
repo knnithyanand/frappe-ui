@@ -13,7 +13,7 @@ export default defineConfig({
     },
     sourcemap: true,
     rollupOptions: {
-      external: ['vue', 'vue-router', '@yletlabs/frappe-ui', 'socket.io-client'],
+      external: ['vue', 'vue-router', '@yletlabs/frappe-ui', 'socket.io-client', '@vueuse/core'],
     },
   },
 })
