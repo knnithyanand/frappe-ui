@@ -1,6 +1,7 @@
 <script setup lang="ts">
 import { ref } from 'vue'
 import { Alert, Button, Select, TextInput } from '@yletlabs/frappe-ui'
+import CalendarView from './components/CalendarView.vue';
 
 const name = ref('')
 const role = ref('developer')
@@ -29,6 +30,8 @@ const role = ref('developer')
       />
 
       <Button label="Submit" theme="blue" />
+
+      <CalendarView />
     </section>
   </main>
 </template>
