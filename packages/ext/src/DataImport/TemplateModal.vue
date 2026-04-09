@@ -59,7 +59,7 @@
 <script setup lang="ts">
 import { ref } from 'vue'
 import type { DocField } from './types'
-import { createResource } from '@yletlabs/frappe-ui/resources'
+import { createResource } from '../utils/resources.js'
 import { fieldsToIgnore, getChildTableName } from './dataImport'
 import Button from "@yletlabs/frappe-ui/components/Button/Button.vue"
 import Checkbox from "@yletlabs/frappe-ui/components/Checkbox/Checkbox.vue"

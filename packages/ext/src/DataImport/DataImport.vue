@@ -44,7 +44,7 @@
 <script setup lang="ts">
 import { computed, nextTick, ref, watch } from 'vue'
 import type { DataImportProps, DataImport } from './types'
-import { createListResource, createResource } from '@yletlabs/frappe-ui/resources'
+import { createListResource, createResource } from '../utils/resources.js'
 import { useRoute } from 'vue-router'
 import Breadcrumbs from '@yletlabs/frappe-ui/components/Breadcrumbs/Breadcrumbs.vue'
 import DataImportList from './DataImportList.vue'

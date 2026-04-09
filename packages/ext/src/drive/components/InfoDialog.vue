@@ -134,8 +134,8 @@ import {
   Dialog,
   Button,
   LoadingIndicator,
-  createResource,
-} from '../../../src'
+} from '@yletlabs/frappe-ui'
+import { createResource } from '../../utils/resources.js'
 import TagInput from './TagInput/TagInput.vue'
 import { ref, inject } from 'vue'
 import { onKeyDown } from '@vueuse/core'

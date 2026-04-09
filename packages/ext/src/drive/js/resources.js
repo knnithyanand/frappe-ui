@@ -1,4 +1,5 @@
-import { createResource, toast } from '../../../src'
+import { toast } from '@yletlabs/frappe-ui'
+import { createResource } from '../../utils/resources.js'
 import { prettyData } from '../js/utils'
 export const getTeams = createResource({
   url: 'drive.api.permissions.get_teams',

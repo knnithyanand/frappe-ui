@@ -26,7 +26,7 @@
 import LightningIcon from '../../icons/LightningIcon.vue'
 import FrappeIcon from '@yletlabs/frappe-ui/components/FrappeIcon.vue'
 import { Button } from '@yletlabs/frappe-ui/components/Button/index.ts'
-import { createResource } from '@yletlabs/frappe-ui/resources'
+import { createResource } from '../utils/resources.js'
 import { ref, computed } from 'vue'
 
 const props = defineProps({

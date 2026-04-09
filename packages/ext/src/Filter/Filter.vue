@@ -14,7 +14,7 @@ import Button from "@yletlabs/frappe-ui/components/Button/Button.vue";
 import Combobox from "@yletlabs/frappe-ui/components/Combobox/Combobox.vue";
 import Popover from "@yletlabs/frappe-ui/components/Popover/Popover.vue";
 import Select from "@yletlabs/frappe-ui/components/Select/Select.vue";
-import { createResource } from "@yletlabs/frappe-ui/resources";
+import { createResource } from "../utils/resources.js";
 
 import FilterIcon from "../Icons/FilterIcon.vue";
 

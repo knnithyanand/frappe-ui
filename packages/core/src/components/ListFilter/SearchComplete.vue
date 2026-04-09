@@ -10,8 +10,8 @@
 
 <script setup>
 import Autocomplete from '../Autocomplete/Autocomplete.vue'
-import { createListResource } from '../../resources'
 import { computed, ref, watch } from 'vue'
+import { frappeRequest } from '../../utils/frappeRequest'
 
 const props = defineProps({
   value: {
@@ -45,42 +45,57 @@ const props = defineProps({
   },
 })
 
-watch(
-  () => props.doctype,
-  (value) => {
-    r.doctype = value
-    r.reload()
-  },
-)
+const records = ref([])
 
-const r = createListResource({
-  doctype: props.doctype,
-  pageLength: props.pageLength,
-  cache: ['link_doctype', props.doctype],
-  auto: true,
-  fields: [props.labelField, props.searchField, props.valueField],
-  onSuccess: () => {
-    selection.value = props.value
-      ? options.value.find((o) => o.value === props.value)
-      : null
-  },
-})
 const options = computed(
   () =>
-    r.data?.map((result) => ({
+    records.value?.map((result) => ({
       label: result[props.labelField],
       value: result[props.valueField],
     })) || [],
 )
 const selection = ref(null)
 
-function onUpdateQuery(query) {
-  r.update({
-    filters: {
-      [props.searchField]: ['like', `%${query}%`],
+watch(
+  () => [props.value, options.value],
+  () => {
+    selection.value = props.value
+      ? options.value.find((o) => o.value === props.value) || null
+      : null
+  },
+  { immediate: true },
+)
+
+watch(
+  () => props.doctype,
+  () => {
+    fetchOptions('')
+  },
+  { immediate: true },
+)
+
+async function fetchOptions(query) {
+  let filters = query
+    ? {
+        [props.searchField]: ['like', `%${query}%`],
+      }
+    : undefined
+
+  let data = await frappeRequest({
+    url: 'frappe.client.get_list',
+    method: 'GET',
+    params: {
+      doctype: props.doctype,
+      fields: [props.labelField, props.searchField, props.valueField],
+      filters,
+      limit_page_length: props.pageLength,
+      limit: props.pageLength,
     },
   })
+  records.value = Array.isArray(data) ? data : []
+}
 
-  r.reload()
+function onUpdateQuery(query) {
+  fetchOptions(query)
 }
 </script>

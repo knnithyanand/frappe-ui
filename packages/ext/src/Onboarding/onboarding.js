@@ -1,5 +1,5 @@
 import call from '@yletlabs/frappe-ui/utils/call'
-import { createResource } from '@yletlabs/frappe-ui/resources'
+import { createResource } from '../utils/resources.js'
 import { minimize, showHelpModal } from '../Help/help'
 import { sessionUser } from '../session'
 import { useStorage } from '@vueuse/core'

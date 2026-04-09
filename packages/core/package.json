@@ -21,8 +21,6 @@
     },
     "./style.css": "./dist/frappe-ui.css",
     "./components/*": "./src/components/*",
-    "./resources": "./src/resources/index.ts",
-    "./resources/*": "./src/resources/*",
     "./utils/*": "./src/utils/*"
   },
   "scripts": {

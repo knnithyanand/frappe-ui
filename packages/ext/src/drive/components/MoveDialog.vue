@@ -215,7 +215,6 @@
 import { watch, computed, h, ref, reactive } from 'vue'
 
 import {
-  createResource,
   Dialog,
   Button,
   Tabs,
@@ -224,7 +223,8 @@ import {
   Input,
   LoadingIndicator,
   toast,
-} from '../../../src'
+} from '@yletlabs/frappe-ui'
+import { createResource } from '../../utils/resources.js'
 import { move, getTeams } from '../js/resources'
 
 import { useRoute } from 'vue-router'

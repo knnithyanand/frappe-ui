@@ -27,9 +27,8 @@ import {
 } from '@yletlabs/frappe-ui/components/Combobox/index.ts'
 import FormLabel from '@yletlabs/frappe-ui/components/FormLabel.vue'
 import debounce from '@yletlabs/frappe-ui/utils/debounce'
-// @ts-ignore - Vue SFC without explicit types
-import { createResource } from '@yletlabs/frappe-ui/resources'
 import { frappeRequest } from '@yletlabs/frappe-ui/utils/frappeRequest'
+import { createResource } from '../utils/resources.js'
 import type { LinkProps, SelectOption } from './types'
 import LucidePlus from '~icons/lucide/plus'
 
