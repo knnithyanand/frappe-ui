@@ -10,7 +10,7 @@
     "allowJs": true,
     "checkJs": false,
     "resolveJsonModule": true,
-    "declaration": true,
+    "declaration": false,
     "noEmit": true
   },
   "include": ["src/**/*.ts", "src/**/*.js"]
