@@ -32,13 +32,13 @@ import { computed } from 'vue'
 const props = defineProps({
   currentStep: {
     type: Object,
-    default: {
+    default: () => ({
       title: 'Title',
       message: 'Message',
       videoURL: '',
       buttonLabel: 'Button Label',
       onClick: () => {},
-    },
+    }),
   },
   dialogOptions: {
     type: Object,
