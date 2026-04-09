@@ -90,6 +90,7 @@ export default defineConfig({
     search: { provider: 'local' },
     nav: [
       { text: 'Docs', link: '/docs/introduction' },
+      { text: 'Migration Guide', link: '/docs/migration-guide' },
       { text: 'Blog', link: '/blog' },
     ],
     // sidebar: sidebarConfig,
@@ -102,8 +103,6 @@ export default defineConfig({
     resolve: {
       alias: {
         '@/components': path.resolve(__dirname, '../components/'),
-        '@yletlabs/frappe-ui': path.resolve(__dirname, '../../packages/core/src'),
-        '@yletlabs/frappe-ui-ext': path.resolve(__dirname, '../../packages/ext/src'),
         'dayjs/esm': 'dayjs',
       },
     },

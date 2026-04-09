@@ -1,66 +1,40 @@
 # Utilities
 
-Some common utilities that are useful in building frontend apps.
+Useful helpers exported from `@yletlabs/frappe-ui`.
 
-## debounce
+## `debounce`
 
-Creates a function that will run only once in the specified number of wait time
-(milliseconds). In the following example, if you run `debouncedInput` function
-every time the user presses a key, it will run only once in every `500ms`.
+Run a function only once within a wait window (in milliseconds).
 
-```js
+```ts
 import { debounce } from '@yletlabs/frappe-ui'
 
-function onInput(e) {
-  // do something with input event
+const onInput = (value: string) => {
+  console.log(value)
 }
 
-let debouncedInput = debounce(onInput, 500)
+const debouncedInput = debounce(onInput, 500)
 ```
 
-## fileToBase64
+## `fileToBase64`
 
-This function will return the base64 string of a
-[File object](https://developer.mozilla.org/en-US/docs/Web/API/File_API).
+Convert a `File` object to a base64 string.
 
-```js
+```ts
 import { fileToBase64 } from '@yletlabs/frappe-ui'
 
-let base64 = fileToBase64(file) // file must be an instance of File
+const base64 = await fileToBase64(file)
 ```
 
-## pageMeta
+## `usePageMeta`
 
-This is a plugin that can be used to update the `document.title` reactively as
-the page changes.
+Set page title and favicon metadata from composition API code.
 
-Register the plugin in your `main.js` file.
+```ts
+import { usePageMeta } from '@yletlabs/frappe-ui'
 
-```js
-import { pageMetaPlugin } from '@yletlabs/frappe-ui'
-// ...
-app.use(pageMetaPlugin)
-```
-
-Now, in your page component, declare the `pageMeta` function. It must return an
-object with `title` and (`icon` or `emoji`) properties. The `pageMeta` function
-behaves like a computed property, if there are reactive dependences that change,
-`document.title` will also change accordingly.
-
-**Page.vue**
-
-```vue
-<template>...</template>
-<script>
-export default {
-    ...
-    pageMeta() {
-        return {
-            title: 'Page Title',
-            icon: '<link to .png, .ico file>',
-            emoji: '🌈'
-        }
-    }
-}
-</script>
+usePageMeta(() => ({
+  title: 'Dashboard',
+  emoji: '📊',
+}))
 ```

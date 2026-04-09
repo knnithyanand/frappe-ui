@@ -3,6 +3,7 @@
 <img src="https://github.com/user-attachments/assets/0a81cdc1-d957-47a9-b151-f5571be0d038" width="80" />
 
 # Frappe UI
+
 **Rapidly build modern frontends for Frappe apps**
 
 <img alt="NPM Downloads" src="https://img.shields.io/npm/dm/frappe-ui.svg?style=flat"/>
@@ -14,19 +15,31 @@
 
 ## Frappe UI
 
-Frappe UI provides a set of components and utilities for rapid UI development. Components are built using Vue 3 and Tailwind.
-Along with generic components like Button, Link, Dialog, etc., it also contains utilities for handling server-side data fetching, directives and utilities.
-
+Frappe UI provides a set of components and utilities for rapid UI development.
+Components are built using Vue 3 and Tailwind. Along with generic components
+like Button, Link, Dialog, etc., it also contains utilities for handling
+server-side data fetching, directives and utilities.
 
 ### Motivation
-In 2019, I began building [Frappe Books](https://github.com/frappe/books) which had a new design. This led to the creation of small reusable components like Button, Dialog, and Card. Moving on to [Frappe Cloud](https://github.com/frappe/press) in 2020, I reused and evolved these components in the Frappe Cloud UI. In 2022, while starting a new project, I decided to extract these components into a standalone package to avoid repeating the copy-paste process. This package is now being developed alongside the [Gameplan](https://github.com/frappe/gameplan), continually adding generic components and utilities for frontend development.
+
+In 2019, I began building [Frappe Books](https://github.com/frappe/books) which
+had a new design. This led to the creation of small reusable components like
+Button, Dialog, and Card. Moving on to
+[Frappe Cloud](https://github.com/frappe/press) in 2020, I reused and evolved
+these components in the Frappe Cloud UI. In 2022, while starting a new project,
+I decided to extract these components into a standalone package to avoid
+repeating the copy-paste process. This package is now being developed alongside
+the [Gameplan](https://github.com/frappe/gameplan), continually adding generic
+components and utilities for frontend development.
 
 ### Under the Hood
 
-- [TailwindCSS](https://github.com/tailwindlabs/tailwindcss): Utility first CSS Framework to build design system based UI.
-- [Headless UI](https://github.com/tailwindlabs/headlessui): Unstyled and accessible UI components.
-- [TipTap](https://github.com/ueberdosis/tiptap): ProseMirror based rich-text editor with a Vue API.
-- [dayjs](https://github.com/iamkun/dayjs): Minimal javascript library for working with dates.
+- [TailwindCSS](https://github.com/tailwindlabs/tailwindcss): Utility-first CSS
+  framework.
+- [Reka UI](https://reka-ui.com): Unstyled accessible primitives for Vue.
+- [TipTap](https://github.com/ueberdosis/tiptap): ProseMirror-based rich text
+  editor with Vue support.
+- [dayjs](https://github.com/iamkun/dayjs): Lightweight date utility library.
 
 ## Links
 
@@ -38,43 +51,28 @@ In 2019, I began building [Frappe Books](https://github.com/frappe/books) which 
 ## Usage
 
 ```sh
-npm install frappe-ui
-# or
-yarn add frappe-ui
-```
-
-Now, import the FrappeUI plugin and components in your Vue app's `main.js`:
-
-```js
-import { createApp } from 'vue'
-import { FrappeUI } from 'frappe-ui'
-import App from './App.vue'
-import './index.css'
-
-let app = createApp(App)
-app.use(FrappeUI)
-app.mount('#app')
+pnpm add @yletlabs/frappe-ui
 ```
 
 Import the stylesheet once in your app entry:
 
-```js
+```ts
+import { createApp } from 'vue'
+import App from './App.vue'
 import '@yletlabs/frappe-ui/style.css'
+
+let app = createApp(App)
+app.mount('#app')
 ```
 
-Now, you can import needed components and start using it:
+Now, import components directly:
 
-```html
+```vue
 <template>
-  <button>Click me</button>
+  <Button label="Click me" theme="blue" />
 </template>
-<script>
-  import { Button } from 'frappe-ui'
-  export default {
-    components: {
-      Button,
-    },
-  }
+<script setup lang="ts">
+import { Button } from '@yletlabs/frappe-ui'
 </script>
 ```
 
