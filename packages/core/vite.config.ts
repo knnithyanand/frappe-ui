@@ -9,7 +9,7 @@ export default defineConfig({
     lib: {
       entry: './src/index.ts',
       name: 'FrappeUI',
-      formats: ['es', 'cjs'],
+      formats: ['es'],
       fileName: (format) => `frappe-ui.${format}.js`,
       cssFileName: 'frappe-ui',
     },

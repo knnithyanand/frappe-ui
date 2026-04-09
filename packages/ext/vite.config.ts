@@ -8,7 +8,7 @@ export default defineConfig({
     lib: {
       entry: './src/index.js',
       name: 'FrappeUIExt',
-      formats: ['es', 'cjs'],
+      formats: ['es'],
       fileName: (format) => `frappe-ui-ext.${format}.js`,
     },
     sourcemap: true,
