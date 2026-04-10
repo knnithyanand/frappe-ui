@@ -1,7 +1,7 @@
 import { Node, mergeAttributes } from '@tiptap/core'
 import { VueNodeViewRenderer } from '@tiptap/vue-3'
 import ImageGroupNodeView from './ImageGroupNodeView.vue'
-import { UploadedFile } from '../../../../utils/useFileUpload'
+import type { UploadedFile } from '../../../../utils/useFileUpload'
 
 export interface ImageGroupOptions {
   /**

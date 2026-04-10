@@ -9,7 +9,7 @@ import { Plugin, Selection, Transaction, EditorState } from '@tiptap/pm/state'
 import { EditorView } from '@tiptap/pm/view'
 import { Node } from '@tiptap/pm/model'
 import { fileToBase64 } from '../../../../index'
-import { UploadedFile } from '../../../../utils/useFileUpload'
+import type { UploadedFile } from '../../../../utils/useFileUpload'
 
 export const localFileMap = new Map()
 

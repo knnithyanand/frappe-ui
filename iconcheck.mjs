@@ -1,0 +1,10 @@
+import { readFileSync } from 'fs';
+const content = readFileSync('./packages/ext/src/drive/js/icons.js', 'utf8');
+const regex = /from "(~icons\/lucide\/[^"]+)"/g;
+const matches = [...content.matchAll(/from "~icons\/lucide\/([^"]+)"/g)];
+const iconNames = [...new Set(matches.map(m => m[1]))];
+const m = await import('/Users/nithyanandkn/GitHub/frappe-ui/node_modules/.pnpm/lucide-static@1.8.0/node_modules/lucide-static/dist/esm/lucide-static.js');
+const camelCase = s => s.replace(/-([a-z0-9])/g, (_, c) => c.toUpperCase()).replace(/^(.)/, c => c.toUpperCase());
+const missing = iconNames.filter(n => !m[camelCase(n)]);
+console.log('MISSING:', missing.join(', '));
+console.log('Total:', iconNames.length, '| Missing:', missing.length);

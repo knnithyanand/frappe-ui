@@ -1,4 +1,4 @@
-import { Editor, Range } from '@tiptap/core'
+import { Editor, type Range } from '@tiptap/core'
 import { PluginKey } from '@tiptap/pm/state'
 import {
   createSuggestionExtension,

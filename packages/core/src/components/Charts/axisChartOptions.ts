@@ -1,6 +1,6 @@
 import useEchartsOptions from './eChartOptions'
 import { formatValue, mergeDeep } from './helpers'
-import {
+import type {
   AreaSeriesConfig,
   AxisChartConfig,
   BarSeriesConfig,

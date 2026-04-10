@@ -6,10 +6,10 @@ import {
   MaybeRefOrGetter,
   toValue,
 } from 'vue'
-import { UseFetchOptions, AfterFetchContext } from '@vueuse/core'
+import type { UseFetchOptions, AfterFetchContext } from '@vueuse/core'
 import { useFrappeFetch } from '../useFrappeFetch'
 import { useCall } from '../useCall/useCall'
-import { UseCallOptions } from '../useCall/types'
+import type { UseCallOptions } from '../useCall/types'
 import { docStore } from '../docStore'
 import { listStore } from '../useList/listStore'
 

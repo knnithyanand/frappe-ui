@@ -1,7 +1,7 @@
 import { createApp, h } from 'vue'
 import Link from '@tiptap/extension-link'
 import tippy, { type Instance as TippyInstance } from 'tippy.js'
-import { getMarkRange, Range, Editor } from '@tiptap/core'
+import { getMarkRange, type Range, Editor } from '@tiptap/core'
 import { MarkType } from '@tiptap/pm/model'
 import { Plugin, PluginKey } from '@tiptap/pm/state'
 import LinkPopup from '../../components/LinkPopup.vue'

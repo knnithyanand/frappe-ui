@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import { computed } from "vue";
-import { MultiSelectOption, MultiSelectProps } from "./types";
+import type { MultiSelectOption, MultiSelectProps } from "./types";
 
 import {
   ComboboxContent,

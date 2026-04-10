@@ -1,5 +1,5 @@
 import { formatDate, formatLabel, formatValue, mergeDeep } from './helpers'
-import { AxisChartConfig } from './types'
+import type { AxisChartConfig } from './types'
 
 export const PADDING_TOP = 0
 export const PADDING_BOTTOM = 10

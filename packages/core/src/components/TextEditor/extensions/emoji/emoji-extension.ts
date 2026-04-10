@@ -1,6 +1,6 @@
 import { PluginKey } from '@tiptap/pm/state'
 import {
-  BaseSuggestionItem,
+  type BaseSuggestionItem,
   createSuggestionExtension,
 } from '../suggestion/createSuggestionExtension'
 import EmojiList from './EmojiList.vue'

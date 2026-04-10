@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import { computed, ref } from 'vue'
-import { MonthPickerProps } from './types'
+import type { MonthPickerProps } from './types'
 
 import Button from '../Button/Button.vue'
 import Popover from '../Popover/Popover.vue'

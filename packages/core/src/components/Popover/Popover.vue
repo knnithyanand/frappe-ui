@@ -72,7 +72,7 @@ import {
   PopoverPortal,
   PopoverRoot,
 } from 'reka-ui'
-import { PopoverProps, PopoverEmits } from './types'
+import type { PopoverProps, PopoverEmits } from './types'
 
 const props = withDefaults(defineProps<PopoverProps>(), {
   show: undefined,

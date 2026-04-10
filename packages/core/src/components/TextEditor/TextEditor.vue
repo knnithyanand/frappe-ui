@@ -73,7 +73,7 @@ import TextEditorBubbleMenu from './components/TextEditorBubbleMenu.vue'
 import TextEditorFloatingMenu from './components/TextEditorFloatingMenu.vue'
 
 import { useFileUpload } from '../../utils/useFileUpload'
-import { TextEditorEmits, TextEditorProps } from './types'
+import type { TextEditorEmits, TextEditorProps } from './types'
 import { getTagExtensions } from './extensions/tag'
 
 function defaultUploadFunction(file: File) {

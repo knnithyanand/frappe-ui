@@ -8,14 +8,14 @@ import {
   toValue,
 } from 'vue'
 import {
-  AfterFetchContext,
-  OnFetchErrorContext,
-  UseFetchOptions,
+  type AfterFetchContext,
+  type OnFetchErrorContext,
+  type UseFetchOptions,
 } from '@vueuse/core'
 import { useFrappeFetch } from '../useFrappeFetch'
 import { useCall } from '../useCall/useCall'
 import { parseFilters, makeGetParams, normalizeCacheKey } from '../utils'
-import { UseListOptions, UseListResponse } from './types'
+import type { UseListOptions, UseListResponse } from './types'
 import { idbStore } from '../idbStore'
 import { listStore } from './listStore'
 import { docStore } from '../docStore'

@@ -1,4 +1,4 @@
-import { server } from './src/mocks/node'
+import { server } from './packages/core/src/__mocks__/node'
 import { beforeAll, afterEach, afterAll } from 'vitest'
 
 beforeAll(() => {

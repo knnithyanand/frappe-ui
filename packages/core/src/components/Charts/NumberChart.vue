@@ -52,7 +52,7 @@
 
 <script setup lang="ts">
 import { formatValue } from './helpers'
-import { NumberChartConfig } from './types'
+import type { NumberChartConfig } from './types'
 
 defineProps<{ config: NumberChartConfig }>()
 </script>

@@ -1,5 +1,5 @@
 import { MaybeRefOrGetter, Reactive, Ref } from 'vue'
-import { CacheKey } from '../useCall/types'
+import type { CacheKey } from '../useCall/types'
 
 export type Field = string
 export type LinkField = `${Field}.${Field}` | `${Field}.${Field} as ${string}`

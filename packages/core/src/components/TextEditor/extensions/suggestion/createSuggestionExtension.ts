@@ -1,11 +1,11 @@
-import { Extension, Editor, Range } from '@tiptap/core'
+import { Extension, Editor, type Range } from '@tiptap/core'
 import { VueRenderer } from '@tiptap/vue-3'
 import Suggestion, {
-  SuggestionOptions,
-  SuggestionProps,
+  type SuggestionOptions,
+  type SuggestionProps,
 } from '@tiptap/suggestion'
 import { PluginKey } from '@tiptap/pm/state'
-import tippy, { Instance as TippyInstance, Props as TippyProps } from 'tippy.js'
+import tippy, { type Instance as TippyInstance, type Props as TippyProps } from 'tippy.js'
 import { Component as VueComponent } from 'vue'
 
 export interface BaseSuggestionItem {

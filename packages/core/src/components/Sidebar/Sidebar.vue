@@ -57,7 +57,7 @@ import { breakpointsTailwind, useBreakpoints } from '@vueuse/core'
 import { provide, computed } from 'vue'
 import SidebarHeader from './SidebarHeader.vue'
 import SidebarItem from './SidebarItem.vue'
-import { SidebarProps } from './types'
+import type { SidebarProps } from './types'
 
 import LucidePanelRightOpen from '~icons/lucide/panel-right-open'
 import SidebarSection from './SidebarSection.vue'

@@ -1,6 +1,6 @@
 import { getTitleOptions } from './eChartOptions'
 import { formatValue } from './helpers'
-import { DonutChartConfig } from './types'
+import type { DonutChartConfig } from './types'
 
 export default function useDonutChartOptions(config: DonutChartConfig) {
   let data = config.data || []

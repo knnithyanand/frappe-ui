@@ -4,7 +4,7 @@ import { VueNodeViewRenderer } from '@tiptap/vue-3'
 import { PluginKey } from '@tiptap/pm/state'
 import {
   createSuggestionExtension,
-  BaseSuggestionItem,
+  type BaseSuggestionItem,
 } from '../suggestion/createSuggestionExtension'
 import SuggestionList from '../suggestion/SuggestionList.vue'
 import './style.css'

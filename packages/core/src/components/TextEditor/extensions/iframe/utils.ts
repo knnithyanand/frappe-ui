@@ -1,4 +1,4 @@
-import { IframeOptions } from './iframe-extension'
+import type { IframeOptions } from './iframe-extension'
 
 
 export const ALLOWED_DOMAINS = [

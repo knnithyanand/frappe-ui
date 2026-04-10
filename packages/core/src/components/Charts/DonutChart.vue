@@ -6,7 +6,7 @@
 import { computed, ref } from 'vue'
 import useDonutChartOptions from './donutChartOptions'
 import ECharts from './ECharts.vue'
-import { DonutChartConfig } from './types'
+import type { DonutChartConfig } from './types'
 
 const props = defineProps<{ config: DonutChartConfig }>()
 

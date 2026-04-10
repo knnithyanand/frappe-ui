@@ -1,5 +1,5 @@
 import { RouterLinkProps } from 'vue-router'
-import { ButtonProps } from '../Button'
+import type { ButtonProps } from '../Button'
 import { type Component } from 'vue'
 
 export type DropdownOption = {
