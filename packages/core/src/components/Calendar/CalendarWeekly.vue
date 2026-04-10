@@ -1,7 +1,7 @@
 <template>
   <div class="flex flex-1 flex-col overflow-y-auto">
     <!-- Day List -->
-    <div class="flex border-b-[1px]">
+    <div class="flex border-b">
       <div class="w-20"></div>
       <div class="grid w-full grid-cols-7">
         <span
@@ -12,7 +12,7 @@
           {{ isToday(date) ? daysList[date.getDay()] : parseDateWithDay(date) }}
           <span
             v-if="isToday(date)"
-            class="inline-flex items-center justify-center bg-surface-gray-7 text-ink-white rounded size-[25px]"
+            class="inline-flex items-center justify-center bg-surface-gray-7 text-ink-white rounded size-6.25"
           >
             {{ date.getDate() }}
           </span>
@@ -23,14 +23,14 @@
     <!-- Full day events -->
     <div
       class="flex shrink-0 h-fit"
-      :class="[config.noBorder ? 'border-b-[1px]' : 'border-[1px] border-t-0']"
+      :class="[config.noBorder ? 'border-b' : 'border border-t-0']"
     >
       <div
         class="flex justify-center items-start py-0.5 w-20 text-base text-ink-gray-6 text-center"
       >
         <component
           :is="showCollapsable ? Button : 'div'"
-          :class="{ '!pl-1.5 pr-1 py-1 !gap-1': showCollapsable }"
+          :class="{ 'pl-1.5! pr-1 py-1 gap-1!': showCollapsable }"
           variant="ghost"
           :iconRight="
             showCollapsable ? (isCollapsed ? 'chevron-down' : 'chevron-up') : ''
@@ -38,7 +38,7 @@
           @click="showCollapsable && (isCollapsed = !isCollapsed)"
         >
           <div
-            class="text-sm text-ink-gray-6 h-[29px] inline-flex items-center"
+            class="text-sm text-ink-gray-6 h-7.25 inline-flex items-center"
           >
             All day
           </div>
@@ -76,7 +76,7 @@
               "
               :label="fullDayEvents[parseDate(date)]?.length - 2 + ' more'"
               variant="ghost"
-              class="w-fit text-sm !py-0.5 !h-5 !justify-start cursor-pointer"
+              class="w-fit text-sm py-0.5! h-5! justify-start! cursor-pointer"
               @click.stop="isCollapsed = false"
             />
           </div>
@@ -86,7 +86,7 @@
 
     <div
       class="relative flex h-full flex-col overflow-auto border-outline-gray-1"
-      :class="[config.noBorder ? '' : 'border-b-[1px] border-l-[1px]']"
+      :class="[config.noBorder ? '' : 'border-b border-l']"
       ref="gridRef"
     >
       <div class="flex">
@@ -103,7 +103,7 @@
         <div class="relative flex w-full flex-col">
           <!-- time events => not full day events => overflow-scroll here -->
           <div
-            class="w-[calc(100%-4px)] h-px z-[2] left-0.5 mt-[0.5px] bg-[#F79596] absolute"
+            class="w-[calc(100%-4px)] h-px z-2 left-0.5 mt-[0.5px] bg-[#F79596] absolute"
             :style="currentTime"
           />
           <div class="grid w-full grid-cols-7">
@@ -112,10 +112,10 @@
               v-for="(date, idx) in weeklyDates"
               class="relative w-full border-outline-gray-1"
               :class="[
-                idx === 0 && 'calendar-column border-l-[1px]',
+                idx === 0 && 'calendar-column border-l',
                 config.noBorder && idx === weeklyDates.length - 1
                   ? ''
-                  : 'border-r-[1px]',
+                  : 'border-r',
                 isWeekend(date, config) && 'bg-surface-gray-1',
               ]"
               :data-date-attr="date"
@@ -132,7 +132,7 @@
               >
                 <div
                   class="border-outline-gray-1 w-full"
-                  :class="i !== timeArray.length - 1 && 'border-b-[1px]'"
+                  :class="i !== timeArray.length - 1 && 'border-b'"
                   :style="{ height: `${hourHeight}px` }"
                 />
               </div>

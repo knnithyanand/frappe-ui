@@ -58,7 +58,7 @@
                 as-child
                 @select="item.onClick"
                 :disabled="item.disabled"
-                class="data-[disabled]:cursor-not-allowed"
+                class="data-disabled:cursor-not-allowed"
               >
                 <slot v-if="$slots.item" name="item" v-bind="{ item, close }" />
                 <component
@@ -167,7 +167,7 @@
                                 handleItemClick(subItem, event)
                             "
                             :disabled="subItem.disabled"
-                            class="data-[disabled]:cursor-not-allowed"
+                            class="data-disabled:cursor-not-allowed"
                           >
                             <component
                               v-if="subItem.component"
@@ -330,11 +330,11 @@ const getTextColor = (item: DropdownItem) => {
 
 const getBackgroundColor = (item: DropdownItem) =>
   item.theme === 'red'
-    ? 'focus:bg-surface-red-3 data-[highlighted]:bg-surface-red-3 data-[state=open]:bg-surface-red-3'
-    : 'focus:bg-surface-gray-3 data-[highlighted]:bg-surface-gray-3 data-[state=open]:bg-surface-gray-3'
+    ? 'focus:bg-surface-red-3 data-highlighted:bg-surface-red-3 data-state-open:bg-surface-red-3'
+    : 'focus:bg-surface-gray-3 data-highlighted:bg-surface-gray-3 data-state-open:bg-surface-gray-3'
 const getSubmenuBackgroundColor = (item: DropdownItem) =>
   getBackgroundColor(item) +
-  ' data-[state=open]:bg-surface-' +
+  ' data-state-open:bg-surface-' +
   (item.theme === 'red' ? 'red-3' : 'gray-3')
 
 // Unified group processing for both main options and submenu options

@@ -42,7 +42,7 @@
               class="z-10 w-full flex justify-between items-center"
               :class="[
                 date.toDateString() === new Date().toDateString()
-                  ? 'p-[3px] pb-0.5'
+                  ? 'p-0.75 pb-0.5'
                   : 'p-2',
               ]"
             >
@@ -51,7 +51,7 @@
                 class="cursor-pointer"
                 :class="[
                   date.toDateString() === new Date().toDateString()
-                    ? 'flex items-center justify-center bg-surface-gray-7 text-ink-white rounded size-[25px]'
+                    ? 'flex items-center justify-center bg-surface-gray-7 text-ink-white rounded size-6.25'
                     : 'bg-surface-white ',
                   isCurrentMonth(date) ? 'text-ink-gray-6' : 'text-ink-gray-4',
                 ]"

@@ -78,7 +78,7 @@
         :class="
           roundedClass === 'rounded' || roundedClass?.includes?.('rounded-b')
             ? 'mx-2 border-outline-gray-1'
-            : 'border-t-[--surface-gray-2]'
+            : 'border-t-[var(--surface-gray-2)]'
         "
       />
     </component>

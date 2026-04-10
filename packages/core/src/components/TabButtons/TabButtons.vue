@@ -7,13 +7,13 @@
       v-for="button in buttons"
       :key="button.label"
       v-bind="button"
-      class="!h-6.5"
+      class="h-6.5!"
       :disabled="button.disabled"
       role="tab"
       :aria-selected="isSelected(button)"
       :class="[
-        isSelected(button) && '!bg-surface-white text-ink-gray-8 shadow',
-        !button.disabled && !isSelected(button) ? '!text-ink-gray-5' : '',
+        isSelected(button) && 'bg-surface-white! text-ink-gray-8 shadow',
+        !button.disabled && !isSelected(button) ? 'text-ink-gray-5!' : '',
       ]"
       @click="onSelect(button)"
     >

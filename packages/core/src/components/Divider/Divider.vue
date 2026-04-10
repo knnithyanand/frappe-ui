@@ -28,8 +28,8 @@ const props = withDefaults(defineProps<DividerProps>(), {
 
 const alignmentClasses = computed(() => {
   let spacerDimensionClasses = {
-    horizontal: 'border-t-[1px] w-full',
-    vertical: 'border-l-[1px]',
+    horizontal: 'border-t w-full',
+    vertical: 'border-l',
   }[props.orientation]
 
   // Case when divider is inside a flex container

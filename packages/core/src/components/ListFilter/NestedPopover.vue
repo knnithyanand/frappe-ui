@@ -6,7 +6,7 @@
       </div>
     </template>
     <template #body="{ isOpen, close }">
-      <div class="z-[100]">
+      <div class="z-100">
         <slot name="body" v-bind="{ open: isOpen, close }" />
       </div>
     </template>

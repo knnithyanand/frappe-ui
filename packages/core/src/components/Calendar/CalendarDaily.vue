@@ -3,14 +3,14 @@
     <!-- Full day events -->
     <div
       class="flex shrink-0 h-fit"
-      :class="[config.noBorder ? 'border-t-[1px]' : 'border-[1px] border-b-0']"
+      :class="[config.noBorder ? 'border-t' : 'border border-b-0']"
     >
       <div
-        class="flex justify-center items-start pt-[3px] w-20 text-base text-ink-gray-6 text-center"
+        class="flex justify-center items-start pt-0.75 w-20 text-base text-ink-gray-6 text-center"
       >
         <component
           :is="showCollapsable ? Button : 'div'"
-          :class="{ '!pl-1.5 pr-1 py-1 !gap-1': showCollapsable }"
+          :class="{ 'pl-1.5! pr-1 py-1 gap-1!': showCollapsable }"
           variant="ghost"
           :iconRight="
             showCollapsable ? (isCollapsed ? 'chevron-down' : 'chevron-up') : ''
@@ -43,7 +43,7 @@
           v-if="showCollapsable && isCollapsed && dayFullDayEvents.length > 4"
           :label="dayFullDayEvents.length - 4 + ' more'"
           variant="ghost"
-          class="w-fit text-sm !h-6 !justify-start cursor-pointer"
+          class="w-fit text-sm h-6! justify-start! cursor-pointer"
           @click.stop="isCollapsed = false"
         />
       </div>
@@ -52,7 +52,7 @@
       <div
         class="flex h-full w-full overflow-scroll border-outline-gray-1"
         :class="[
-          config.noBorder ? 'border-t-[1px]' : 'border-[1px] border-r-0',
+          config.noBorder ? 'border-t' : 'border border-r-0',
         ]"
         ref="gridRef"
       >
@@ -68,8 +68,8 @@
         <!-- Calendar Grid / Right Column -->
         <div class="grid h-full w-full grid-cols-1 pb-2">
           <div
-            class="calendar-column relative border-l-[1px] border-outline-gray-1"
-            :class="[config.noBorder ? '' : ' border-r-[1px]']"
+            class="calendar-column relative border-l border-outline-gray-1"
+            :class="[config.noBorder ? '' : ' border-r']"
           >
             <!-- Day Grid -->
             <div
@@ -83,7 +83,7 @@
             >
               <div
                 class="w-full border-outline-gray-1"
-                :class="i !== timeArray.length - 1 && 'border-b-[1px]'"
+                :class="i !== timeArray.length - 1 && 'border-b'"
                 :style="{ height: `${hourHeight}px` }"
               />
             </div>

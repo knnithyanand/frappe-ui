@@ -350,7 +350,7 @@ defineSlots<{
       </ComboboxAnchor>
       <ComboboxPortal>
         <ComboboxContent
-          class="z-10 min-w-[--reka-combobox-trigger-width] mt-1 bg-surface-modal overflow-hidden rounded-lg shadow-2xl"
+          class="z-10 min-w-(--reka-combobox-trigger-width) mt-1 bg-surface-modal overflow-hidden rounded-lg shadow-2xl"
           position="popper"
           @openAutoFocus.prevent
           @closeAutoFocus.prevent
@@ -380,7 +380,7 @@ defineSlots<{
                   :key="`${index}-${idx}`"
                   :value="getKey(option)"
                   :disabled="isDisabled(option)"
-                  class="text-base leading-none text-ink-gray-7 rounded flex items-center h-7 px-2.5 py-1.5 relative select-none data-[disabled]:opacity-50 data-[disabled]:pointer-events-none data-[highlighted]:outline-hidden data-[highlighted]:bg-surface-gray-3"
+                  class="text-base leading-none text-ink-gray-7 rounded flex items-center h-7 px-2.5 py-1.5 relative select-none data-disabled:opacity-50 data-disabled:pointer-events-none data-highlighted:outline-hidden data-highlighted:bg-surface-gray-3"
                 >
                   <slot
                     v-if="getSlotName(option)"
@@ -410,7 +410,7 @@ defineSlots<{
                 :key="index"
                 :value="getKey(optionOrGroup)"
                 :disabled="isDisabled(optionOrGroup)"
-                class="text-base leading-none text-ink-gray-7 rounded flex items-center h-7 px-2.5 py-1.5 relative select-none data-[disabled]:opacity-50 data-[disabled]:pointer-events-none data-[highlighted]:outline-hidden data-[highlighted]:bg-surface-gray-3"
+                class="text-base leading-none text-ink-gray-7 rounded flex items-center h-7 px-2.5 py-1.5 relative select-none data-disabled:opacity-50 data-disabled:pointer-events-none data-highlighted:outline-hidden data-highlighted:bg-surface-gray-3"
               >
                 <slot
                   v-if="getSlotName(optionOrGroup)"
