@@ -31,7 +31,7 @@
             ? 'var(--reka-popover-trigger-width)'
             : undefined,
         }"
-        :class="['PopoverContent', { 'has-transition': hasTransition }]"
+        :class="['PopoverContent z-[100]', { 'has-transition': hasTransition }]"
         @mouseover="
           () => {
             pointerOverTargetOrPopup = true

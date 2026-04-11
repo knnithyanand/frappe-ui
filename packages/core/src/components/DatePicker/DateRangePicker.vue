@@ -50,7 +50,7 @@
     <template #body="{ togglePopover }">
       <div
         ref="popoverContentRef"
-        class="w-fit min-w-60 select-none text-base text-ink-gray-9 rounded-lg bg-surface-modal shadow-2xl ring-1 ring-black ring-opacity-5 mt-2"
+        class="mt-2 w-fit min-w-60 select-none rounded-lg bg-surface-modal text-base text-ink-gray-9 shadow-2xl"
       >
         <!-- Header / Navigation -->
         <div class="flex items-center justify-between p-2 pb-0 gap-1">
