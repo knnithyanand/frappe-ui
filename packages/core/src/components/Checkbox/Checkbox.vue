@@ -1,6 +1,6 @@
 <template>
   <div
-    class="inline-flex gap-2 rounded transition"
+    class="inline-flex items-center gap-2 rounded transition"
     :class="{
       'px-2.5 py-1.5': padding && size === 'sm',
       'px-3 py-2': padding && size === 'md',
@@ -9,8 +9,9 @@
     }"
   >
     <input
-      class="rounded-sm mt-[1px] bg-surface-white"
+      class="rounded-sm bg-surface-white shrink-0"
       :class="inputClasses"
+      :style="checkedInputStyle"
       type="checkbox"
       :disabled="disabled"
       :id="htmlId"
@@ -61,11 +62,20 @@ const inputClasses = computed(() => {
       : 'hover:shadow-sm focus:ring-0 focus-visible:ring-2 focus-visible:ring-outline-gray-3 active:bg-surface-gray-2'
 
   let sizeClasses = {
-    sm: 'w-3.5 h-3.5',
-    md: 'w-4 h-4',
+    sm: 'size-3.5',
+    md: 'size-4',
   }[props.size]
 
   return [baseClasses, interactionClasses, sizeClasses]
+})
+
+const checkedInputStyle = computed(() => {
+  if (!model.value) return null
+
+  return {
+    backgroundColor: 'currentColor',
+    borderColor: 'transparent',
+  }
 })
 
 const handleChange = (e: Event) => {
