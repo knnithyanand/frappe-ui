@@ -503,3 +503,16 @@ export function getWeekMonthParts(weekDates) {
   }
   return parts
 }
+
+export function getWeekDateRange(weekDates) {
+  const orderedWeek = [...(weekDates || [])].sort(
+    (a, b) => new Date(a) - new Date(b),
+  )
+
+  if (!orderedWeek.length) return null
+
+  return {
+    start: orderedWeek[0],
+    end: orderedWeek[orderedWeek.length - 1],
+  }
+}

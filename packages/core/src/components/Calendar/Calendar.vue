@@ -109,6 +109,7 @@ import {
   monthList,
   handleSeconds,
   formatMonthYear,
+  getWeekDateRange,
   getWeekMonthParts,
 } from './calendarUtils'
 import { dayjs } from '../../utils/dayjs'
@@ -621,9 +622,10 @@ function getVisibleRange() {
 
   if (activeView.value === 'Week') {
     const weekDates = datesInWeeks.value[week.value] || []
-    if (!weekDates.length) return null
-    const orderedWeek = [...weekDates].sort((a, b) => a - b)
-    const end = dayjs(orderedWeek[orderedWeek.length - 1]).endOf('day')
+    const weekRange = getWeekDateRange(weekDates)
+    if (!weekRange) return null
+    const start = dayjs(weekRange.start).startOf('day')
+    const end = dayjs(weekRange.end).endOf('day')
     return {
       startDate: toDateString(start),
       endDate: toDateString(end),
