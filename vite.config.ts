@@ -5,5 +5,5 @@ import { lucideIcons } from './packages/vite/src/lucideIcons.js'
 
 // https://vitejs.dev/config/
 export default defineConfig({
-  plugins: [tailwindcss(), vue(), lucideIcons()],
+  plugins: [lucideIcons(), tailwindcss(), vue()],
 })
