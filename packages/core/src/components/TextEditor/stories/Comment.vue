@@ -17,6 +17,10 @@ const customButtons = [
   'Link',
   'Image',
 ]
+
+function updateCustomValue(val: string) {
+  customValue.value = val
+}
 </script>
 
 <template>
@@ -24,7 +28,7 @@ const customButtons = [
     ref="textEditor"
     editor-class="prose-sm max-w-none min-h-[4rem]"
     :content="customValue"
-    @change="(val) => (customValue.value = val)"
+    @change="updateCustomValue"
     :starterkit-options="{ heading: { levels: [2, 3, 4] } }"
     placeholder="Write something amazing..."
   >

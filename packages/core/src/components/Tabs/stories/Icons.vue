@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import { reactive } from 'vue'
 import { Tabs } from '@yletlabs/frappe-ui'
-import LucideGithub from '~icons/lucide/git-branch-2'
+import LucideGithub from '~icons/lucide/git-branch'
 import LucideTwitter from '~icons/lucide/at-sign'
 import LucideLinkedin from '~icons/lucide/briefcase'
 

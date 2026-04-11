@@ -19,6 +19,10 @@ const value = ref(`
 const value = ref(true);</code></pre>
 </div>
 `)
+
+function updateValue(val: string) {
+  value.value = val
+}
 </script>
 
 <template>
@@ -26,7 +30,7 @@ const value = ref(true);</code></pre>
     editor-class="prose-sm min-h-[4rem] border rounded-b-lg border-t-0 p-2"
     :content="value"
     placeholder="Type something..."
-    @change="(val) => (value.value = val)"
+    @change="updateValue"
     :bubbleMenu="true"
     :fixed-menu="true"
   />
